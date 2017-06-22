@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import control.Avaliacao;
 import control.Login;
 import control.Produto;
 
@@ -24,7 +25,7 @@ public class UsuarioDAO
 		ArrayList<Produto> lista = new ArrayList<Produto>();
 		
 		try {
-			stmt = conn.prepareStatement("select * from produto");
+			stmt = conn.prepareStatement("select * from produto where id_cadastro = " + Login.getCadastro());
 			rs = stmt.executeQuery();
 			Produto produto = new Produto();
 			while(rs.next()){
@@ -36,7 +37,6 @@ public class UsuarioDAO
 				produto.setPreco(rs.getDouble("PRECO"));
 				produto.setId_img(rs.getInt("ID_IMG"));				
 			}
-			JOptionPane.showMessageDialog(null,produto.getNome());
 			lista.add(produto);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,6 +52,35 @@ public class UsuarioDAO
 		return lista;
 	}
 	
-	
-
+	public ArrayList<Avaliacao> RetornaAvaliacao(){
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Avaliacao> lista = new ArrayList<Avaliacao>();
+		
+		try {
+			stmt = conn.prepareStatement("select * from avaliacao where id_cadastro = " + Login.getCadastro());
+			rs = stmt.executeQuery();
+			Avaliacao avaliacao = new Avaliacao();
+			while(rs.next()){
+				avaliacao.setIdAvaliacao(rs.getInt("ID_AVALIACAO"));
+				avaliacao.setIdCadastro(rs.getInt("ID_CADASTRO"));
+				avaliacao.setEmail(rs.getString("EMAIL"));
+				avaliacao.setAvaliacao(rs.getString("AVAL"));
+				avaliacao.setDataAvaliacao(rs.getDate("DATA_AVAL"));
+				avaliacao.setNota(rs.getString("NOTA"));				
+			}
+			lista.add(avaliacao);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
 }

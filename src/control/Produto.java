@@ -1,6 +1,13 @@
 package control;
 
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import model.UsuarioDAO;
 
 public class Produto {
 	private static int id_produto;
@@ -12,6 +19,20 @@ public class Produto {
 	private static String descricao;
 	private static double preco;
 	
+	@SuppressWarnings("unused")
+	public static TableModel AtualizaTabelaProdutos(){
+		UsuarioDAO usuario = new UsuarioDAO();
+		ArrayList<Produto> listap = usuario.RetornaProdutos();
+		List<String[]> lista = new ArrayList<>();
+		String[] colunas = {"ID", "NOME", "CATEGORIA", "PRECO"};
+		Produto produto = new Produto();
+		for(int i = 0; i < listap.size(); i++){
+			produto = listap.get(i);
+			lista.add(new String[]{String.valueOf(produto.getId_produto()), String.valueOf(produto.getNome()), String.valueOf(produto.getId_categ()), "R$ " + String.valueOf(produto.getPreco())});
+		}
+		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
+		return model;		
+	}
 	
 	public static int getId_produto() {
 		return id_produto;

@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import control.Avaliacao;
 import control.Cadastro;
 import control.Produto;
 import methods.ScreenSize;
@@ -80,19 +81,7 @@ public class FormUsuario extends JFrame {
 			}
 		});
 	}
-	private TableModel AtualizaTabelaProdutos(){
-		UsuarioDAO usuario = new UsuarioDAO();
-		ArrayList<Produto> listap = usuario.RetornaProdutos();
-		List<String[]> lista = new ArrayList<>();
-		String[] colunas = {"ID", "NOME", "CATEGORIA", "PRECO"};
-		Produto produto = new Produto();
-		for(int i = 0; i < listap.size(); i++){
-			produto = listap.get(i);
-			lista.add(new String[]{String.valueOf(produto.getId_produto()), String.valueOf(produto.getNome()), String.valueOf(produto.getId_categ()), "R$ " + String.valueOf(produto.getPreco())});
-		}
-		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
-		return model;		
-	}
+	
 
 	private void selectedPanel(String g){
 		 CardLayout cl = (CardLayout)(contentPane.getLayout());
@@ -156,6 +145,7 @@ public class FormUsuario extends JFrame {
 		PainelPrincipal_Usuario.add(scrollPane_1);
 		
 		table = new JTable();
+		table.setModel(Avaliacao.AtualizaTabelaAvaliacao());
 		scrollPane_1.setViewportView(table);
 		
 		
@@ -205,7 +195,7 @@ public class FormUsuario extends JFrame {
 		panelProdutos.add(scrollPane);
 		
 		table_1 = new JTable();
-		table_1.setModel(AtualizaTabelaProdutos());
+		table_1.setModel(Produto.AtualizaTabelaProdutos());
 		scrollPane.setViewportView(table_1);
 		
 		JButton button = new JButton("Alterar");
