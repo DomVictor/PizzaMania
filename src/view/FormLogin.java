@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.Login;
+import model.BdCadastro;
 import model.LoginDAO;
 import oracle.jdbc.OracleData;
 
@@ -92,12 +93,14 @@ public class FormLogin extends JFrame {
 						{
 							FormAdm f = new FormAdm();
 							f.setVisible(true);
+							BdCadastro.PegaCadastro();
 						}
 						else
 						{
 							FormUsuario fu = new FormUsuario();
 							fu.setVisible(true);
-							
+							BdCadastro.PegaCadastro();
+
 								
 						}
 					}

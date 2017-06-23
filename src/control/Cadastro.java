@@ -1,5 +1,7 @@
 package control;
 
+import view.FormUsuario;
+
 public class Cadastro {
 	
 	private static String nome;
@@ -16,10 +18,11 @@ public class Cadastro {
 	private static String sobre;
 	
 	
-	public static void LoadCadastro()
-	{
-		
+	public static void setForm() {
+		FormUsuario.setLblxNome(getNome());
 	}
+		
+	
 	
 	
 	public static String getNome() {
@@ -94,6 +97,9 @@ public class Cadastro {
 	public static void setSobre(String sobre) {
 		Cadastro.sobre = sobre;
 	}
+
+
+	
 	
 	
 	

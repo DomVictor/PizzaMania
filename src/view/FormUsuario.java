@@ -65,8 +65,21 @@ public class FormUsuario extends JFrame {
 	private JTextArea txaSobre;
 	private JTable table;
 	private JTable table_1;
+	public static String lblxNome;
 	
 	
+	
+	
+	public String getLblxNome() {
+		return lblxNome;
+	}
+
+
+	public static void setLblxNome(String lblxNome) {
+		FormUsuario.lblxNome = lblxNome;
+	}
+
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -74,7 +87,7 @@ public class FormUsuario extends JFrame {
 					FormUsuario frame = new FormUsuario();
 					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
-					
+										
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -222,9 +235,13 @@ public class FormUsuario extends JFrame {
 		contentPane.add(PanelCadastroEdit_Usuario, CE);
 		contentPane.add(panel4, NL);
 		
-		
+		// 	-------------------------------------------
+		// -----------------------------------------------
+		// -------------------------------------------------
+		// ---------------------------------------------------
+		// ----------------------------------------------------
 		// Panel Cadastro View Conteúdo
-		JLabel lblNomePizzaria = new JLabel(Cadastro.getNome());
+		JLabel lblNomePizzaria = new JLabel(lblxNome);
 		lblNomePizzaria.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblNomePizzaria.setBounds(150, 5, 739, 25);
 		PanelCadastroView_Usuario.add(lblNomePizzaria);

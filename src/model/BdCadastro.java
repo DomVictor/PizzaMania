@@ -16,6 +16,60 @@ import view.FormLogin;
 
 public class BdCadastro {
 	
+	public static void PegaCadastro() throws SQLException
+	{
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try
+		{
+			String cocores = "select c.id_cadastro, c.nome, c.cpf_cnpj, "
+					+ "c.id_img, c.email, c.sobre, c.telefone, c.telefone_2, "
+					+ "c.ativo, e.cep, e.numero, x.logradouro, x.bairro, x.cidade, x.uf "
+					+ "from cadastro c join endereco e "
+					+ "on c.id_endereco = e.id_endereco "
+					+ "join tabelacep x on x.cep = e.cep "
+					+ "where c.id_cadastro = " + Login.getCadastro();
+			conn = ConnectionFactory.getConnection();
+			stmt = conn.prepareStatement(cocores);
+			rs = stmt.executeQuery();
+			while(rs.next())
+			{
+				Cadastro.setBairro(rs.getString("bairro"));
+				Cadastro.setCep(rs.getString("cep"));
+				Cadastro.setCidade(rs.getString("cidade"));
+				Cadastro.setNome(rs.getString("nome"));
+				Cadastro.setCnpj(rs.getString("cpf_cnpj"));
+				Cadastro.setEmail(rs.getString("email"));
+				Cadastro.setEstado(rs.getString("uf"));
+				Cadastro.setNumero(rs.getString("numero"));
+				Cadastro.setRua(rs.getString("logradouro"));
+				Cadastro.setSobre(rs.getString("sobre"));
+				Cadastro.setTelefone(rs.getString("telefone"));
+				Cadastro.setTelefone2(rs.getString("telefone_2"));
+				Cadastro.setForm();
+				
+			}
+			
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+
+		} 
+		finally
+		{
+			try 
+			{
+				ConnectionFactory.closeConnection(conn, stmt, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
 	
 	public static void updateCadastro() throws SQLException {
 

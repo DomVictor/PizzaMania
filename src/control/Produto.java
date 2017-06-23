@@ -19,7 +19,7 @@ public class Produto {
 	private static String descricao;
 	private static double preco;
 	
-	@SuppressWarnings("unused")
+	@SuppressWarnings("static-access")
 	public static TableModel AtualizaTabelaProdutos(){
 		UsuarioDAO usuario = new UsuarioDAO();
 		ArrayList<Produto> listap = usuario.RetornaProdutos();
