@@ -229,7 +229,8 @@ public class FormUsuario extends JFrame {
 		table_1.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				produto.setId_produto((int) table_1.getValueAt(table_1.getSelectedRow(), 0));
+				produto = new Produto();
+				produto.setId_produto(Integer.parseInt(table_1.getValueAt(table_1.getSelectedRow(), 0).toString()));
 			}
 			
 		});
@@ -242,9 +243,9 @@ public class FormUsuario extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDAO ud = new UsuarioDAO();
+				produtoa = new ArrayList<Produto>();
 				produtoa = ud.RetornaProdutos(cadastro.getId(), 0);
-				FormProduto pr = new FormProduto(produto, produtoa);
-				pr.setExtendedState(MAXIMIZED_BOTH);
+				FormProduto pr = new FormProduto(produtoa.get(0));
 				pr.setVisible(true);
 			}
 		});
