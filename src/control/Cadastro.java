@@ -4,100 +4,149 @@ import view.FormUsuario;
 
 public class Cadastro {
 	
-	private static String nome;
-	private static String cnpj;
-	private static String telefone;
-	private static String telefone2;
-	private static String email;
-	private static String cep;
-	private static String rua;
-	private static String numero;
-	private static String bairro;
-	private static String cidade;
-	private static String estado;
-	private static String sobre;
-	
-	
-	public static void setForm() {
-		FormUsuario.setLblxNome(getNome());
+	public int getId() {
+		return id;
 	}
-		
-	
-	
-	
-	public static String getNome() {
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getId_img() {
+		return id_img;
+	}
+	public void setId_img(int id_img) {
+		this.id_img = id_img;
+	}
+	public String getNome() {
 		return nome;
 	}
-	public static void setNome(String nome) {
-		Cadastro.nome = nome;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
-	public static String getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
-	public static void setCnpj(String cnpj) {
-		Cadastro.cnpj = cnpj;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
-	public static String getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public static void setTelefone(String telefone) {
-		Cadastro.telefone = telefone;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
-	public static String getTelefone2() {
+	public String getTelefone2() {
 		return telefone2;
 	}
-	public static void setTelefone2(String telefone2) {
-		Cadastro.telefone2 = telefone2;
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
 	}
-	public static String getEmail() {
+	public String getEmail() {
 		return email;
 	}
-	public static void setEmail(String email) {
-		Cadastro.email = email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public static String getCep() {
+	public String getCep() {
 		return cep;
 	}
-	public static void setCep(String cep) {
-		Cadastro.cep = cep;
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
-	public static String getRua() {
+	public String getRua() {
 		return rua;
 	}
-	public static void setRua(String rua) {
-		Cadastro.rua = rua;
+	public void setRua(String rua) {
+		this.rua = rua;
 	}
-	public static String getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public static void setNumero(String numero) {
-		Cadastro.numero = numero;
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
-	public static String getBairro() {
+	public String getBairro() {
 		return bairro;
 	}
-	public static void setBairro(String bairro) {
-		Cadastro.bairro = bairro;
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
 	}
-	public static String getCidade() {
+	public String getCidade() {
 		return cidade;
 	}
-	public static void setCidade(String cidade) {
-		Cadastro.cidade = cidade;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
-	public static String getEstado() {
+	public String getCompl() {
+		return compl;
+	}
+	public void setCompl(String compl) {
+		this.compl = compl;
+	}
+	public String getRefe() {
+		return refe;
+	}
+	public void setRefe(String refe) {
+		this.refe = refe;
+	}
+	public boolean isLat() {
+		return lat;
+	}
+	public void setLat(boolean lat) {
+		this.lat = lat;
+	}
+	public boolean isLng() {
+		return lng;
+	}
+	public void setLng(boolean lng) {
+		this.lng = lng;
+	}
+	public double getNota() {
+		return nota;
+	}
+	public void setNota(double nota) {
+		this.nota = nota;
+	}
+	public String getEstado() {
 		return estado;
 	}
-	public static void setEstado(String estado) {
-		Cadastro.estado = estado;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
-	public static String getSobre() {
+	public String getSobre() {
 		return sobre;
 	}
-	public static void setSobre(String sobre) {
-		Cadastro.sobre = sobre;
+	public void setSobre(String sobre) {
+		this.sobre = sobre;
 	}
+	private int id;
+	private int id_img;
+	private  String nome;
+	private  String cnpj;
+	private  String telefone;
+	private  String telefone2;
+	private  String email;
+	private  String cep;
+	private  String rua;
+	private  String numero;
+	private  String bairro;
+	private  String cidade;
+	private String compl;
+	private String refe;
+	private boolean lat;
+	private boolean lng;
+	private double nota;
+	private  String estado;
+	private  String sobre;
+	
+	
+	
+	
 
+
+	
+	
+	
+	
 
 	
 	

@@ -1,29 +1,21 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import control.Login;
-import model.BdCadastro;
+import control.Cadastro;
 import model.LoginDAO;
-import oracle.jdbc.OracleData;
-
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.sql.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
 
 public class FormLogin extends JFrame {
 
@@ -82,37 +74,28 @@ public class FormLogin extends JFrame {
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				
-				
-				try {
-					LoginDAO.ListLogin(txtUsuario.getText(), String.valueOf(txtSenha.getPassword()));
-					if(Login.getUsuario().equals(txtUsuario.getText()) && Login.getSenha().equals(String.valueOf(txtSenha.getPassword())))
+				try 
+				{
+					if(txtUsuario.getText().equals(null) || txtSenha.getText().equals(null))
 					{
-						JOptionPane.showMessageDialog(null, "Logado com sucesso!");
-						if(Login.getNivel() == 1)
-						{
-							FormAdm f = new FormAdm();
-							f.setVisible(true);
-							BdCadastro.PegaCadastro();
-						}
-						else
-						{
-							FormUsuario fu = new FormUsuario();
-							fu.setVisible(true);
-							BdCadastro.PegaCadastro();
-
-								
-						}
+						JOptionPane.showMessageDialog(null, "Usuario ou Senha não preenchidos! Tente novamente.");
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos!");
+					LoginDAO ld = new LoginDAO();
+					Cadastro cadastro = new Cadastro();
+					cadastro = ld.ListLogin(txtUsuario.getText(), txtSenha.getText());
+						if(cadastro != null){
+							FormUsuario usu = new FormUsuario(cadastro);
+							usu.setVisible(true);
+							usu.setExtendedState(MAXIMIZED_BOTH);
+						}
 					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
-				
 			}
 		}
 		);

@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -31,10 +32,12 @@ import control.Produto;
 import methods.ScreenSize;
 import model.BdCadastro;
 import model.UsuarioDAO;
+import javax.swing.SwingConstants;
 
 public class FormUsuario extends JFrame {
 
 	private static JPanel contentPane;
+	Cadastro cadastro = new Cadastro();
 
 	PainelPrincipal_Usuario PainelPrincipal_Usuario = new PainelPrincipal_Usuario();
 	PanelProdutos panelProdutos = new PanelProdutos();
@@ -61,13 +64,38 @@ public class FormUsuario extends JFrame {
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtNome;
-	private JComboBox cbEstado;
 	private JTextArea txaSobre;
 	private JTable table;
 	private JTable table_1;
 	public static String lblxNome;
-	
-	
+	private JTextField txtEstado;
+	public TableModel AtualizaTabelaProdutos(){
+		UsuarioDAO usuario = new UsuarioDAO();
+		ArrayList<Produto> listap = usuario.RetornaProdutos(cadastro.getId());
+		List<String[]> lista = new ArrayList<>();
+		String[] colunas = {"ID", "NOME", "CATEGORIA", "PRECO"};
+		Produto produto = new Produto();
+		for(int i = 0; i < listap.size(); i++){
+			produto = listap.get(i);
+			lista.add(new String[]{String.valueOf(produto.getId_produto()), String.valueOf(produto.getNome()), String.valueOf(produto.getId_categ()), "R$ " + String.valueOf(produto.getPreco())});
+		}
+		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
+		return model;		
+	}
+	public  TableModel AtualizaTabelaAvaliacao(){
+		UsuarioDAO usuario = new UsuarioDAO();
+		ArrayList<Avaliacao> listap = usuario.RetornaAvaliacao(cadastro.getId());
+		List<String[]> lista = new ArrayList<>();
+		String[] colunas = {"ID", "NOTA", "EMAIL", "AVALIACAO"};
+		Avaliacao avaliacao = new Avaliacao();
+		for(int i = 0; i < listap.size(); i++){
+			avaliacao = listap.get(i);
+			lista.add(new String[]{String.valueOf(avaliacao.getIdAvaliacao()), String.valueOf(avaliacao.getNota()), 
+			String.valueOf(avaliacao.getEmail()), String.valueOf(avaliacao.getAvaliacao())});
+		}
+		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
+		return model;		
+	}
 	
 	
 	public String getLblxNome() {
@@ -78,22 +106,6 @@ public class FormUsuario extends JFrame {
 	public static void setLblxNome(String lblxNome) {
 		FormUsuario.lblxNome = lblxNome;
 	}
-
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FormUsuario frame = new FormUsuario();
-					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-					frame.setVisible(true);
-										
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 
 	private void selectedPanel(String g){
@@ -101,7 +113,8 @@ public class FormUsuario extends JFrame {
 		    cl.show(contentPane, g);
 	}
 	
-	public FormUsuario() {
+	public FormUsuario(Cadastro cad){
+		cadastro = cad;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setBounds(0, 0, ScreenSize.getScreenWidth(), ScreenSize.getScreenHeight());
@@ -158,7 +171,7 @@ public class FormUsuario extends JFrame {
 		PainelPrincipal_Usuario.add(scrollPane_1);
 		
 		table = new JTable();
-		table.setModel(Avaliacao.AtualizaTabelaAvaliacao());
+		table.setModel(AtualizaTabelaAvaliacao());
 		scrollPane_1.setViewportView(table);
 		
 		
@@ -208,7 +221,7 @@ public class FormUsuario extends JFrame {
 		panelProdutos.add(scrollPane);
 		
 		table_1 = new JTable();
-		table_1.setModel(Produto.AtualizaTabelaProdutos());
+		table_1.setModel(AtualizaTabelaProdutos());
 		scrollPane.setViewportView(table_1);
 		
 		JButton button = new JButton("Alterar");
@@ -242,85 +255,106 @@ public class FormUsuario extends JFrame {
 		// ----------------------------------------------------
 		// Panel Cadastro View Conteúdo
 		JLabel lblNomePizzaria = new JLabel(lblxNome);
+		lblNomePizzaria.setText(cadastro.getNome());
 		lblNomePizzaria.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblNomePizzaria.setBounds(150, 5, 739, 25);
+		lblNomePizzaria.setBounds(273, 11, 739, 25);
 		PanelCadastroView_Usuario.add(lblNomePizzaria);
 		
-		JLabel lblCnpj = new JLabel("Cnpj: " + Cadastro.getCnpj());
+		JLabel lblCnpj = new JLabel("Cnpj: " + cadastro.getCnpj());
+		
 		lblCnpj.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		lblCnpj.setBounds(150, 70, 100, 20);
+		lblCnpj.setBounds(304, 47, 268, 21);
 		PanelCadastroView_Usuario.add(lblCnpj);
 		
-		JLabel lblEmail = new JLabel("E-mail: " + Cadastro.getEmail());
+		JLabel lblEmail = new JLabel("E-mail: " + cadastro.getEmail());
 		lblEmail.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		lblEmail.setBounds(150, 110, 100, 20);
+		lblEmail.setBounds(304, 79, 268, 21);
 		PanelCadastroView_Usuario.add(lblEmail);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 153));
-		panel.setBounds(6, 6, 130, 128);
+		panel.setBounds(10, 11, 212, 214);
 		PanelCadastroView_Usuario.add(panel);
 		
 		JLabel lblEndereco = new JLabel("Endere\u00E7o:");
 		lblEndereco.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblEndereco.setBounds(6, 200, 150, 20);
+		lblEndereco.setBounds(34, 254, 150, 20);
 		PanelCadastroView_Usuario.add(lblEndereco);
 		
-		JLabel lblRua = new JLabel("Rua:");
+		JLabel lblRua = new JLabel("Rua: " + cadastro.getRua() + "N°: " + cadastro.getNumero() + " Bairro: " + cadastro.getBairro() + ".");
 		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblRua.setBounds(253, 255, 50, 20);
+		lblRua.setBounds(63, 285, 529, 20);
 		PanelCadastroView_Usuario.add(lblRua);
 		
-		JLabel lblNumero = new JLabel("N\u00FAmero:");
+		JLabel lblNumero = new JLabel("CEP: " + cadastro.getCep());
 		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNumero.setBounds(706, 255, 70, 20);
+		lblNumero.setBounds(63, 378, 151, 20);
 		PanelCadastroView_Usuario.add(lblNumero);
 		
-		JLabel lblCep = new JLabel("CEP:");
-		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCep.setBounds(6, 260, 46, 14);
-		PanelCadastroView_Usuario.add(lblCep);
-		
-		JLabel lblBairro = new JLabel("Bairro:");
+		JLabel lblBairro = new JLabel("Complemento: " + cadastro.getCompl() + ". Referencia: " + cadastro.getRefe() + ".");
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblBairro.setBounds(952, 255, 108, 20);
+		lblBairro.setBounds(63, 316, 529, 20);
 		PanelCadastroView_Usuario.add(lblBairro);
 		
-		JLabel lblCidade = new JLabel("Cidade:");
+		JLabel lblCidade = new JLabel("Cidade: " + cadastro.getCidade() + " Estado: " + cadastro.getEstado());
 		lblCidade.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCidade.setBounds(6, 300, 94, 20);
+		lblCidade.setBounds(63, 347, 529, 20);
 		PanelCadastroView_Usuario.add(lblCidade);
 		
-		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblEstado.setBounds(390, 300, 94, 20);
-		PanelCadastroView_Usuario.add(lblEstado);
-		
-		JLabel lblSobre = new JLabel("Sobre:");
+		JLabel lblSobre = new JLabel("Sobre sua pizzaria ");
 		lblSobre.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblSobre.setBounds(6, 404, 108, 25);
+		lblSobre.setBounds(34, 433, 161, 21);
 		PanelCadastroView_Usuario.add(lblSobre);
 		
-		JLabel lblTelefone = new JLabel("Telefone:");
+		JLabel lblTelefone = new JLabel("Telefone: " + cadastro.getTelefone());
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTelefone.setBounds(875, 76, 70, 20);
+		lblTelefone.setBounds(304, 111, 268, 20);
 		PanelCadastroView_Usuario.add(lblTelefone);
 		
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtNome.setText(cadastro.getNome());
+				txtCnpj.setText(cadastro.getCnpj());
+				txtEmail.setText(cadastro.getEmail());
+				txtRua.setText(cadastro.getRua());
+				txtBairro.setText(cadastro.getBairro());
+				txtCidade.setText(cadastro.getCidade());
+				txtEstado.setText(cadastro.getEstado());
+				txtTelefone.setText(cadastro.getTelefone());
+				txtTelefone2.setText(cadastro.getTelefone2());
+				txtCep.setText(cadastro.getCep());
+				txaSobre.setText(cadastro.getSobre());
+				
 				selectedPanel(CE);
+				
 			}
 		});
 		btnEditar.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnEditar.setBounds(1160, 601, 170, 46);
+		btnEditar.setBounds(1145, 616, 170, 46);
 		PanelCadastroView_Usuario.add(btnEditar);
+		
+		JLabel label = new JLabel("Telefone 2: " + cadastro.getTelefone2());
+		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label.setBounds(304, 142, 268, 20);
+		PanelCadastroView_Usuario.add(label);
+		
+		JLabel label_1 = new JLabel(cadastro.getSobre());
+		label_1.setVerticalAlignment(SwingConstants.TOP);
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_1.setBounds(63, 465, 529, 198);
+		PanelCadastroView_Usuario.add(label_1);
+		
+		JLabel label_2 = new JLabel("Nota: " + cadastro.getNota() + " estrelas.");
+		label_2.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		label_2.setBounds(304, 173, 268, 21);
+		PanelCadastroView_Usuario.add(label_2);
 		
 		
 		// Panel Cadastro Edit Conteúdo
 		JLabel lblNomePizzariaE = new JLabel("Nome: ");
 		lblNomePizzariaE.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblNomePizzariaE.setBounds(150, 5, 739, 25);
+		lblNomePizzariaE.setBounds(146, 21, 739, 25);
 		PanelCadastroEdit_Usuario.add(lblNomePizzariaE);
 		
 		JLabel lblCnpjE = new JLabel("Cnpj: ");
@@ -387,32 +421,44 @@ public class FormUsuario extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				Cadastro novoCad = new Cadastro();
+				novoCad.setId(cadastro.getId());
 				String nome = txtNome.getText();
-				Cadastro.setNome(nome);
+				novoCad.setNome(nome);
 				String cnpj = txtCnpj.getText();
-				Cadastro.setCnpj(cnpj);
+				novoCad.setCnpj(cnpj);
 				String email = txtEmail.getText();
-				Cadastro.setEmail(email);
+				novoCad.setEmail(email);
 				String telefone = txtTelefone.getText();
-				Cadastro.setTelefone(telefone);
+				novoCad.setTelefone(telefone);
 				String telefone2 = txtTelefone2.getText();
-				Cadastro.setTelefone2(telefone2);
+				novoCad.setTelefone2(telefone2);
 				String cep = txtCep.getText();
-				Cadastro.setCep(cep);
+				novoCad.setCep(cep);
 				String rua = txtRua.getText();
-				Cadastro.setRua(rua);
+				novoCad.setRua(rua);
 				String numero = txtNumero.getText();
-				Cadastro.setNumero(numero);
+				novoCad.setNumero(numero);
 				String bairro = txtBairro.getText();
-				Cadastro.setBairro(bairro);
+				novoCad.setBairro(bairro);
 				String cidade = txtCidade.getText();
-				Cadastro.setCidade(cidade);
-				String estado = String.valueOf(cbEstado.getSelectedItem());
-				Cadastro.setEstado(estado);
+				novoCad.setCidade(cidade);
+				String estado = txtEstado.getText();
+				novoCad.setEstado(estado);
 				String sobre = txaSobre.getText();
-				Cadastro.setSobre(sobre);
+				novoCad.setSobre(sobre);
 				try {
-					BdCadastro.updateCadastro();
+					BdCadastro ca = new BdCadastro();
+					if(ca.updateCadastro(novoCad) != false)
+					{
+						JOptionPane.showMessageDialog(null, "Cadastro atualizado com sucesso");
+						cadastro = new Cadastro();
+						cadastro = novoCad;
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "ERRO\nOcorreu algum erro, tente novamente!");
+					}
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -426,6 +472,7 @@ public class FormUsuario extends JFrame {
 		PanelCadastroEdit_Usuario.add(btnSalvar);
 		
 		txtCnpj = new JTextField();
+		txtCnpj.setEditable(false);
 		txtCnpj.setBounds(195, 70, 298, 20);
 		PanelCadastroEdit_Usuario.add(txtCnpj);
 		txtCnpj.setColumns(10);
@@ -456,6 +503,7 @@ public class FormUsuario extends JFrame {
 		txtCep.setColumns(10);
 		
 		txtRua = new JTextField();
+		txtRua.setEditable(false);
 		txtRua.setBounds(293, 257, 359, 20);
 		PanelCadastroEdit_Usuario.add(txtRua);
 		txtRua.setColumns(10);
@@ -466,28 +514,30 @@ public class FormUsuario extends JFrame {
 		txtNumero.setColumns(10);
 		
 		txtBairro = new JTextField();
+		txtBairro.setEditable(false);
 		txtBairro.setBounds(1007, 257, 298, 20);
 		PanelCadastroEdit_Usuario.add(txtBairro);
 		txtBairro.setColumns(10);
 		
 		txtCidade = new JTextField();
+		txtCidade.setEditable(false);
 		txtCidade.setBounds(67, 302, 253, 20);
 		PanelCadastroEdit_Usuario.add(txtCidade);
 		txtCidade.setColumns(10);
-		
-		cbEstado = new JComboBox();
-		cbEstado.setModel(new DefaultComboBoxModel(new String[] {"AM", "AC", "AL", "RO", "RR", "AP", "SE", "PE", "BA", "PI", "PB", "CE", "MA", "RS", "SC", "RJ", "ES", "MG", "MT", "MS", "PR", "PA", "GO", "SP", "TO", "RN"}));
-		cbEstado.setBounds(452, 302, 50, 20);
-		PanelCadastroEdit_Usuario.add(cbEstado);
 		
 		txaSobre = new JTextArea();
 		txaSobre.setBounds(6, 440, 1300, 137);
 		PanelCadastroEdit_Usuario.add(txaSobre);
 		
 		txtNome = new JTextField();
-		txtNome.setBounds(217, 5, 728, 26);
+		txtNome.setBounds(217, 21, 728, 26);
 		PanelCadastroEdit_Usuario.add(txtNome);
 		txtNome.setColumns(10);
+		
+		txtEstado = new JTextField();
+		txtEstado.setColumns(10);
+		txtEstado.setBounds(450, 302, 46, 20);
+		PanelCadastroEdit_Usuario.add(txtEstado);
 		
 	}
 }
