@@ -31,13 +31,21 @@ import control.Cadastro;
 import control.Produto;
 import methods.ScreenSize;
 import model.BdCadastro;
+import model.LoginDAO;
 import model.UsuarioDAO;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.table.AbstractTableModel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 
 public class FormUsuario extends JFrame {
 
 	private static JPanel contentPane;
 	Cadastro cadastro = new Cadastro();
+	Produto produto = new Produto();
 
 	PainelPrincipal_Usuario PainelPrincipal_Usuario = new PainelPrincipal_Usuario();
 	PanelProdutos panelProdutos = new PanelProdutos();
@@ -69,9 +77,14 @@ public class FormUsuario extends JFrame {
 	private JTable table_1;
 	public static String lblxNome;
 	private JTextField txtEstado;
+
+	ArrayList<Produto> listap;
+	ArrayList<Produto> produtoa = new ArrayList<Produto>();
+	
 	public TableModel AtualizaTabelaProdutos(){
 		UsuarioDAO usuario = new UsuarioDAO();
-		ArrayList<Produto> listap = usuario.RetornaProdutos(cadastro.getId());
+		listap = new ArrayList<Produto>();
+		listap = usuario.RetornaProdutos(cadastro.getId(), 1);
 		List<String[]> lista = new ArrayList<>();
 		String[] colunas = {"ID", "NOME", "CATEGORIA", "PRECO"};
 		Produto produto = new Produto();
@@ -146,14 +159,6 @@ public class FormUsuario extends JFrame {
 		});
 		menuBar.add(btnCadastro);
 		
-		JButton btnPizzaria = new JButton("Minha Pizzaria");
-		btnPizzaria.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				selectedPanel(MP);
-			}
-		});
-		menuBar.add(btnPizzaria);
-		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -161,9 +166,9 @@ public class FormUsuario extends JFrame {
 		
 		contentPane.add(PainelPrincipal_Usuario, PPU);
 		
-		JLabel lblNomeA = new JLabel("Nome Pizzaria - Avalia\u00E7oes");
-		lblNomeA.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNomeA.setBounds(10, 11, 343, 22);
+		JLabel lblNomeA = new JLabel("Nome Pizzaria - Avalia\u00E7\u00F5es");
+		lblNomeA.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblNomeA.setBounds(10, 11, 982, 31);
 		PainelPrincipal_Usuario.add(lblNomeA);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -217,32 +222,73 @@ public class FormUsuario extends JFrame {
 		panelProdutos.add(lblProdutos);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 71, 643, 592);
+		scrollPane.setBounds(10, 118, 1066, 545);
 		panelProdutos.add(scrollPane);
 		
 		table_1 = new JTable();
+		table_1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				produto.setId_produto((int) table_1.getValueAt(table_1.getSelectedRow(), 0));
+			}
+			
+		});
 		table_1.setModel(AtualizaTabelaProdutos());
 		scrollPane.setViewportView(table_1);
 		
+		
+		
 		JButton button = new JButton("Alterar");
-		button.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		button.setBounds(694, 624, 134, 39);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UsuarioDAO ud = new UsuarioDAO();
+				produtoa = ud.RetornaProdutos(cadastro.getId(), 0);
+				FormProduto pr = new FormProduto(produto, produtoa);
+				pr.setExtendedState(MAXIMIZED_BOTH);
+				pr.setVisible(true);
+			}
+		});
+		button.setFont(new Font("Tahoma", Font.BOLD, 25));
+		button.setBounds(1135, 127, 157, 53);
 		panelProdutos.add(button);
 		
 		JButton button_1 = new JButton("Excluir");
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		button_1.setBounds(858, 624, 135, 39);
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 25));
+		button_1.setBounds(1135, 272, 157, 53);
 		panelProdutos.add(button_1);
 		
 		JButton button_2 = new JButton("Novo");
-		button_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		button_2.setBounds(1023, 624, 134, 39);
+		button_2.setFont(new Font("Tahoma", Font.BOLD, 25));
+		button_2.setBounds(1135, 422, 157, 53);
 		panelProdutos.add(button_2);
 		
-		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnVoltar.setBounds(1183, 624, 134, 39);
-		panelProdutos.add(btnVoltar);
+		JLabel lblFiltrar = new JLabel("Filtrar:");
+		lblFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblFiltrar.setBounds(16, 85, 81, 22);
+		panelProdutos.add(lblFiltrar);
+		
+		JLabel lblId = new JLabel("");
+		lblId.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblId.setBounds(904, 91, 81, 32);
+		panelProdutos.add(lblId);
+		
+		JLabel lblNome = new JLabel("");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNome.setBounds(900, 154, 120, 26);
+		panelProdutos.add(lblNome);
+		
+		JLabel lblCategoria = new JLabel("");
+		lblCategoria.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCategoria.setBounds(946, 205, 120, 32);
+		panelProdutos.add(lblCategoria);
+		
+		JLabel lblPreco = new JLabel("");
+		lblPreco.setBounds(946, 285, 120, 32);
+		panelProdutos.add(lblPreco);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(72, 85, 112, 24);
+		panelProdutos.add(comboBox_1);
 		contentPane.add(painel2, MP);
 		contentPane.add(PanelCadastroView_Usuario, C);
 		contentPane.add(PanelCadastroEdit_Usuario, CE);
@@ -454,7 +500,10 @@ public class FormUsuario extends JFrame {
 						JOptionPane.showMessageDialog(null, "Cadastro atualizado com sucesso");
 						cadastro = new Cadastro();
 						cadastro = novoCad;
+						
+						
 					}
+					
 					else
 					{
 						JOptionPane.showMessageDialog(null, "ERRO\nOcorreu algum erro, tente novamente!");

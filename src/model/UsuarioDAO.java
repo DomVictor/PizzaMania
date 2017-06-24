@@ -18,15 +18,23 @@ public class UsuarioDAO
 	public static void FormLoad()
 	{	
 	}
-	public ArrayList<Produto> RetornaProdutos(int id_cadastro){
+	public ArrayList<Produto> RetornaProdutos(int id, int func){
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		ArrayList<Produto> lista = new ArrayList<Produto>();
+		String lala;
 		
+		if(func == 1)
+		{
+			lala = "select * from produto where id_cadastro = " + id + " and ativo = '1'";
+		}
+		else
+		{
+			lala = "select * from produto where id_produto = " + id + " and ativo = '1'";
+		}
 		try {
-			Login Login = new Login();
-			stmt = conn.prepareStatement("select * from produto where id_cadastro = " + id_cadastro);
+			stmt = conn.prepareStatement(lala);
 			rs = stmt.executeQuery();
 			Produto produto = new Produto();
 			while(rs.next()){
