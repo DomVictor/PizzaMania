@@ -179,7 +179,7 @@ public class FormUsuario extends JFrame {
 		
 		contentPane.add(PainelPrincipal_Usuario, PPU);
 		
-		JLabel lblNomeA = new JLabel("Nome Pizzaria - Avalia\u00E7\u00F5es");
+		JLabel lblNomeA = new JLabel(cadastro.getNome() + " - Avalia\u00E7\u00F5es");
 		lblNomeA.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNomeA.setBounds(10, 11, 982, 31);
 		PainelPrincipal_Usuario.add(lblNomeA);
@@ -193,8 +193,12 @@ public class FormUsuario extends JFrame {
 		scrollPane_1.setViewportView(table);
 		
 		
+		String ag = "";
+		int nu = 0;
 		
-		JLabel lblAvaliaoGeral = new JLabel("Avalia\u00E7\u00E3o Geral: 4,7");
+		
+		
+		JLabel lblAvaliaoGeral = new JLabel("Avalia\u00E7\u00E3o Geral: " + ag);
 		lblAvaliaoGeral.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblAvaliaoGeral.setBounds(1157, 12, 233, 22);
 		PainelPrincipal_Usuario.add(lblAvaliaoGeral);
