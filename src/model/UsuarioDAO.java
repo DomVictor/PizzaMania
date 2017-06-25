@@ -15,6 +15,8 @@ import control.Produto;
 public class UsuarioDAO 
 
 {
+	Produto produto = new Produto();
+
 	public static void FormLoad()
 	{	
 	}
@@ -56,6 +58,78 @@ public class UsuarioDAO
 			try {
 				rs.close();
 				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return lista;
+	}
+	
+	public void SalvaProduto(Produto produto1)
+	{
+		produto = produto1;
+		
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		String lala;
+		Login lo = new Login();
+		try
+		{
+		lala = "insert into produto ("
+		+ " id_produto, id_cadastro, nome, descricao, id_categ, preco, ativo)"
+		+ " values("
+		+ "seq_produto.NEXTVAL, " + produto.getId_cadastro()
+		+ ", '" + produto.getNome() + "', '" + produto.getDescricao() + "', 1, " + produto.getPreco() + ", 1)";
+				System.out.println(lala);
+			stmt = conn.prepareStatement(lala);
+			stmt.execute();
+			JOptionPane.showMessageDialog(null, "Registro salvo");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	}
+	
+	public ArrayList<Produto> RetornaProduto(int id){
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Produto> lista = new ArrayList<Produto>();
+		String lala;
+		
+		
+			lala = "select * from produto where id_produto = " + id + " and ativo = '1'";
+		try {
+			stmt = conn.prepareStatement(lala);
+			rs = stmt.executeQuery();
+			Produto produto = new Produto();
+			while(rs.next()){
+				produto = new Produto();
+				produto.setId_produto(rs.getInt("ID_PRODUTO"));
+				produto.setId_cadastro(rs.getInt("ID_CADASTRO"));
+				produto.setId_categ(rs.getInt("ID_CATEG"));
+				produto.setDescricao(rs.getString("DESCRICAO"));
+				produto.setNome(rs.getString("NOME"));
+				produto.setPreco(rs.getDouble("PRECO"));
+				produto.setId_img(rs.getInt("ID_IMG"));			
+				lista.add(produto);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -90,11 +164,69 @@ public class UsuarioDAO
 		} finally{
 			try {
 				rs.close();
+				stmt.close();
+				conn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return lista;
+	}
+	public void UpdateProduto(Produto produto1) {
+		produto = produto1;
+		
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		String lala;
+		
+		try
+		{
+		lala = "Update produto set "
+		+ "nome = '" + produto.getNome() + "' "
+		+ ", descricao = '" + produto.getDescricao() 
+		+ "', preco = " + produto.getPreco() 
+		+ " where id_produto = " + produto.getId_produto() + "";
+				
+			stmt = conn.prepareStatement(lala);
+			stmt.execute();
+			JOptionPane.showMessageDialog(null, "Registro alterado");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public void ExcluiProduto(Produto produto1) {
+		produto = produto1;
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		String lala;
+		
+		try
+		{
+		lala = "Update produto set "
+		+ "ativo = 0"
+		+ " where id_produto = " + produto.getId_produto() + "";
+				
+			stmt = conn.prepareStatement(lala);
+			stmt.execute();
+			JOptionPane.showMessageDialog(null, "Registro excluído");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

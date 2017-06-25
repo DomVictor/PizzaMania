@@ -114,6 +114,7 @@ public class BdCadastro {
 		} finally {
 				statement.close();
 				dbConnection.close();
+				statement2.close();
 		}
 		return false;
 	}

@@ -121,7 +121,7 @@ public class FormUsuario extends JFrame {
 	}
 	
 
-	private void selectedPanel(String g){
+	void selectedPanel(String g){
 		 CardLayout cl = (CardLayout)(contentPane.getLayout());
 		    cl.show(contentPane, g);
 	}
@@ -244,9 +244,11 @@ public class FormUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDAO ud = new UsuarioDAO();
 				produtoa = new ArrayList<Produto>();
-				produtoa = ud.RetornaProdutos(cadastro.getId(), 0);
-				FormProduto pr = new FormProduto(produtoa.get(0));
+				produtoa = ud.RetornaProdutos(produto.getId_produto(), 0);
+				produto = produtoa.get(0);
+				FormProduto pr = new FormProduto(produto, 1, cadastro.getId());
 				pr.setVisible(true);
+				pr.setExtendedState(MAXIMIZED_BOTH);
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -254,11 +256,26 @@ public class FormUsuario extends JFrame {
 		panelProdutos.add(button);
 		
 		JButton button_1 = new JButton("Excluir");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UsuarioDAO ud2 = new UsuarioDAO();
+				produtoa = ud2.RetornaProdutos(produto.getId_produto(), 0);
+				produto = produtoa.get(0);
+				ud2.ExcluiProduto(produto);
+			}
+		});
 		button_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		button_1.setBounds(1135, 272, 157, 53);
 		panelProdutos.add(button_1);
 		
 		JButton button_2 = new JButton("Novo");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FormProduto fp = new FormProduto(produto, 0, cadastro.getId());
+				fp.setVisible(true);
+				fp.setExtendedState(MAXIMIZED_BOTH);
+			}
+		});
 		button_2.setFont(new Font("Tahoma", Font.BOLD, 25));
 		button_2.setBounds(1135, 422, 157, 53);
 		panelProdutos.add(button_2);
