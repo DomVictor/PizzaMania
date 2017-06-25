@@ -118,6 +118,47 @@ public class BdCadastro {
 		}
 		return false;
 	}
+	
+	public boolean novoCadastro(Cadastro cad) throws SQLException {
+
+		Connection dbConnection = null;
+		Statement statement = null;
+		Statement statement2 = null;
+		
+		String insert = "INSERT INTO CADASTRO VALUES( ";
+				
+		
+				String insert2 = 
+				" INSERT INTO ENDERECO (ID_ENDERECO, CEP, NUMERO, COMPLEMENTO, REFERENCIA, ATIVO) VALUES("
+				+ "SEQ_ENDERECO.NEXTVAL, '"
+				+ cad.getCep() + "', '"
+				+ cad.getNumero() + "', '"
+				+ cad.getCompl() + "', '"
+				+ cad.getRefe() + "', "
+				+ "'1')";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			statement = dbConnection.createStatement();
+			statement2 = dbConnection.createStatement();
+
+			System.out.println(insert);
+			statement.executeUpdate(insert2);
+			statement.close();
+			statement2.executeUpdate(insert);
+			System.out.println("Record inserted!");
+			return true;
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+				statement.close();
+				dbConnection.close();
+				statement2.close();
+		}
+		return false;
+	}
 
 
 }

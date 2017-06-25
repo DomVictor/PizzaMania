@@ -193,14 +193,13 @@ public class FormUsuario extends JFrame {
 		scrollPane_1.setViewportView(table);
 		
 		
-		String ag = "";
-		int nu = 0;
 		
 		
 		
-		JLabel lblAvaliaoGeral = new JLabel("Avalia\u00E7\u00E3o Geral: " + ag);
-		lblAvaliaoGeral.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblAvaliaoGeral.setBounds(1157, 12, 233, 22);
+		
+		JLabel lblAvaliaoGeral = new JLabel("Avalia\u00E7\u00E3o Geral: " + cadastro.getNota());
+		lblAvaliaoGeral.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblAvaliaoGeral.setBounds(1097, 10, 257, 37);
 		PainelPrincipal_Usuario.add(lblAvaliaoGeral);
 		
 		JLabel lblNewLabel = new JLabel("Filtrar:");
@@ -214,23 +213,9 @@ public class FormUsuario extends JFrame {
 		comboBox.setBounds(57, 74, 111, 20);
 		PainelPrincipal_Usuario.add(comboBox);
 		
-		JButton btnNewButton = new JButton("Responder");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(1052, 611, 134, 39);
-		PainelPrincipal_Usuario.add(btnNewButton);
-		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(830, 101, 500, 499);
+		panel_1.setBounds(830, 101, 500, 549);
 		PainelPrincipal_Usuario.add(panel_1);
-		
-		JButton btnNewButton_1 = new JButton("Voltar");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton_1.setBounds(1196, 611, 134, 39);
-		PainelPrincipal_Usuario.add(btnNewButton_1);
 		contentPane.add(panelProdutos, A);
 		
 		JLabel lblProdutos = new JLabel("Produtos");
@@ -407,8 +392,6 @@ public class FormUsuario extends JFrame {
 				fp.setVisible(true);
 				fp.setExtendedState(MAXIMIZED_BOTH);
 				
-				selectedPanel(CE);
-				
 			}
 		});
 		btnEditar.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -502,52 +485,6 @@ public class FormUsuario extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Cadastro novoCad = new Cadastro();
-				novoCad.setId(cadastro.getId());
-				String nome = txtNome.getText();
-				novoCad.setNome(nome);
-				String cnpj = txtCnpj.getText();
-				novoCad.setCnpj(cnpj);
-				String email = txtEmail.getText();
-				novoCad.setEmail(email);
-				String telefone = txtTelefone.getText();
-				novoCad.setTelefone(telefone);
-				String telefone2 = txtTelefone2.getText();
-				novoCad.setTelefone2(telefone2);
-				String cep = txtCep.getText();
-				novoCad.setCep(cep);
-				String rua = txtRua.getText();
-				novoCad.setRua(rua);
-				String numero = txtNumero.getText();
-				novoCad.setNumero(numero);
-				String bairro = txtBairro.getText();
-				novoCad.setBairro(bairro);
-				String cidade = txtCidade.getText();
-				novoCad.setCidade(cidade);
-				String estado = txtEstado.getText();
-				novoCad.setEstado(estado);
-				String sobre = txaSobre.getText();
-				novoCad.setSobre(sobre);
-				try {
-					BdCadastro ca = new BdCadastro();
-					if(ca.updateCadastro(novoCad) != false)
-					{
-						JOptionPane.showMessageDialog(null, "Cadastro atualizado com sucesso");
-						cadastro = new Cadastro();
-						cadastro = novoCad;
-						
-						
-					}
-					
-					else
-					{
-						JOptionPane.showMessageDialog(null, "ERRO\nOcorreu algum erro, tente novamente!");
-					}
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				
-				selectedPanel(C);
 				
 			}
 		});

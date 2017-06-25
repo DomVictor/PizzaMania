@@ -9,13 +9,21 @@ import javax.swing.border.EmptyBorder;
 
 import control.Cadastro;
 import methods.ScreenSize;
+import model.BdCadastro;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class FormPizzaria1 extends JFrame {
 
@@ -33,6 +41,7 @@ public class FormPizzaria1 extends JFrame {
 	private JTextField txtCidade;
 
 	Cadastro cadastro;
+	private JTextField textField;
 	
 	public FormPizzaria1()
 	{
@@ -178,11 +187,6 @@ public class FormPizzaria1 extends JFrame {
 		lblEstado.setBounds(683, 486, 100, 30);
 		contentPane.add(lblEstado);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		comboBox.setBounds(781, 486, 84, 30);
-		contentPane.add(comboBox);
-		
 		JLabel lblSobre = new JLabel("Sobre:");
 		lblSobre.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblSobre.setBounds(29, 566, 210, 30);
@@ -192,6 +196,69 @@ public class FormPizzaria1 extends JFrame {
 		txtSobre.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtSobre.setBounds(117, 566, 1223, 152);
 		contentPane.add(txtSobre);
+		
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setBounds(772, 486, 86, 31);
+		contentPane.add(textField);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		textField.setColumns(10);
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				Cadastro novoCad = new Cadastro();
+				novoCad.setId(cadastro.getId());
+				String nome = txtNome.getText();
+				novoCad.setNome(nome);
+				String cnpj = txtCnpj.getText();
+				novoCad.setCnpj(cnpj);
+				String email = txtEmail.getText();
+				novoCad.setEmail(email);
+				String telefone = txtTelefone.getText();
+				novoCad.setTelefone(telefone);
+				String telefone2 = txtTelefone2.getText();
+				novoCad.setTelefone2(telefone2);
+				String cep = txtCep.getText();
+				novoCad.setCep(cep);
+				String rua = txtRua.getText();
+				novoCad.setRua(rua);
+				String numero = txtNumero.getText();
+				novoCad.setNumero(numero);
+				String bairro = txtBairro.getText();
+				novoCad.setBairro(bairro);
+				String cidade = txtCidade.getText();
+				novoCad.setCidade(cidade);
+				String estado = textField.getText();
+				novoCad.setEstado(estado);
+				String sobre = txtSobre.getText();
+				novoCad.setSobre(sobre);
+				try {
+					BdCadastro ca = new BdCadastro();
+					if(ca.novoCadastro(novoCad) != false)
+					{
+						JOptionPane.showMessageDialog(null, "Cadastro atualizado com sucesso");
+						cadastro = new Cadastro();
+						cadastro = novoCad;
+					}
+					
+					else
+					{
+						JOptionPane.showMessageDialog(null, "ERRO\nOcorreu algum erro, tente novamente!");
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+						
+						
+			}
+		});
+		btnSalvar.setFont(new Font("Tahoma", Font.BOLD, 30));
+		btnSalvar.setBounds(1162, 11, 178, 54);
+		contentPane.add(btnSalvar);
 	}
 	
 	
@@ -240,7 +307,7 @@ public class FormPizzaria1 extends JFrame {
 		lblCnpj.setBounds(896, 122, 100, 25);
 		contentPane.add(lblCnpj);
 		
-		txtCnpj = new JTextField();
+		txtCnpj = new JTextField(cadastro.getCnpj());
 		txtCnpj.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtCnpj.setBounds(962, 119, 305, 30);
 		contentPane.add(txtCnpj);
@@ -251,7 +318,7 @@ public class FormPizzaria1 extends JFrame {
 		lblEmail.setBounds(29, 210, 94, 30);
 		contentPane.add(lblEmail);
 		
-		txtEmail = new JTextField();
+		txtEmail = new JTextField(cadastro.getEmail());
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtEmail.setBounds(117, 210, 415, 30);
 		contentPane.add(txtEmail);
@@ -262,7 +329,7 @@ public class FormPizzaria1 extends JFrame {
 		lblTelefone.setBounds(576, 210, 148, 30);
 		contentPane.add(lblTelefone);
 		
-		txtTelefone = new JTextField();
+		txtTelefone = new JTextField(cadastro.getTelefone());
 		txtTelefone.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtTelefone.setBounds(687, 210, 196, 30);
 		contentPane.add(txtTelefone);
@@ -273,7 +340,7 @@ public class FormPizzaria1 extends JFrame {
 		lblTelefone_1.setBounds(931, 210, 148, 30);
 		contentPane.add(lblTelefone_1);
 		
-		txtTelefone2 = new JTextField();
+		txtTelefone2 = new JTextField(cadastro.getTelefone2());
 		txtTelefone2.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtTelefone2.setColumns(10);
 		txtTelefone2.setBounds(1073, 210, 196, 30);
@@ -284,14 +351,15 @@ public class FormPizzaria1 extends JFrame {
 		lblCep.setBounds(29, 309, 94, 30);
 		contentPane.add(lblCep);
 		
-		txtCep = new JTextField();
+		txtCep = new JTextField(cadastro.getCep());
 		txtCep.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtCep.setColumns(10);
 		txtCep.setBounds(90, 309, 210, 30);
 		contentPane.add(txtCep);
 		
-		txtRua = new JTextField();
+		txtRua = new JTextField(cadastro.getRua());
 		txtRua.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		txtRua.setEditable(false);
 		txtRua.setColumns(10);
 		txtRua.setBounds(485, 310, 452, 30);
 		contentPane.add(txtRua);
@@ -306,7 +374,7 @@ public class FormPizzaria1 extends JFrame {
 		lblNmero.setBounds(1030, 309, 148, 30);
 		contentPane.add(lblNmero);
 		
-		txtNumero = new JTextField();
+		txtNumero = new JTextField(cadastro.getNumero());
 		txtNumero.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtNumero.setColumns(10);
 		txtNumero.setBounds(1136, 310, 131, 30);
@@ -317,7 +385,7 @@ public class FormPizzaria1 extends JFrame {
 		lblComplemento.setBounds(29, 404, 210, 30);
 		contentPane.add(lblComplemento);
 		
-		txtComplemento = new JTextField();
+		txtComplemento = new JTextField(cadastro.getCompl());
 		txtComplemento.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtComplemento.setColumns(10);
 		txtComplemento.setBounds(200, 404, 452, 30);
@@ -328,7 +396,8 @@ public class FormPizzaria1 extends JFrame {
 		lblBairro.setBounds(741, 404, 148, 30);
 		contentPane.add(lblBairro);
 		
-		txtBairro = new JTextField();
+		txtBairro = new JTextField(cadastro.getBairro());
+		txtBairro.setEditable(false);
 		txtBairro.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtBairro.setColumns(10);
 		txtBairro.setBounds(833, 404, 434, 30);
@@ -339,9 +408,10 @@ public class FormPizzaria1 extends JFrame {
 		lblCidade.setBounds(29, 486, 210, 30);
 		contentPane.add(lblCidade);
 		
-		txtCidade = new JTextField();
+		txtCidade = new JTextField(cadastro.getCidade());
 		txtCidade.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtCidade.setColumns(10);
+		txtCidade.setEditable(false);
 		txtCidade.setBounds(125, 486, 452, 30);
 		contentPane.add(txtCidade);
 		
@@ -349,11 +419,6 @@ public class FormPizzaria1 extends JFrame {
 		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblEstado.setBounds(683, 486, 100, 30);
 		contentPane.add(lblEstado);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		comboBox.setBounds(781, 486, 84, 30);
-		contentPane.add(comboBox);
 		
 		JLabel lblSobre = new JLabel("Sobre:");
 		lblSobre.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -364,5 +429,69 @@ public class FormPizzaria1 extends JFrame {
 		textArea.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		textArea.setBounds(117, 566, 1223, 152);
 		contentPane.add(textArea);
+		
+
+		textField = new JTextField(cadastro.getEstado());
+		textField.setEditable(false);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		textField.setBounds(772, 486, 86, 31);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				Cadastro novoCad = new Cadastro();
+				novoCad.setId(cadastro.getId());
+				String nome = txtNome.getText();
+				novoCad.setNome(nome);
+				String cnpj = txtCnpj.getText();
+				novoCad.setCnpj(cnpj);
+				String email = txtEmail.getText();
+				novoCad.setEmail(email);
+				String telefone = txtTelefone.getText();
+				novoCad.setTelefone(telefone);
+				String telefone2 = txtTelefone2.getText();
+				novoCad.setTelefone2(telefone2);
+				String cep = txtCep.getText();
+				novoCad.setCep(cep);
+				String rua = txtRua.getText();
+				novoCad.setRua(rua);
+				String numero = txtNumero.getText();
+				novoCad.setNumero(numero);
+				String bairro = txtBairro.getText();
+				novoCad.setBairro(bairro);
+				String cidade = txtCidade.getText();
+				novoCad.setCidade(cidade);
+				String estado = textField.getText();
+				novoCad.setEstado(estado);
+				String sobre = textArea.getText();
+				novoCad.setSobre(sobre);
+				try {
+					BdCadastro ca = new BdCadastro();
+					if(ca.updateCadastro(novoCad) != false)
+					{
+						JOptionPane.showMessageDialog(null, "Cadastro atualizado com sucesso");
+						cadastro = new Cadastro();
+						cadastro = novoCad;
+						dispose();
+					}
+					
+					else
+					{
+						JOptionPane.showMessageDialog(null, "ERRO\nOcorreu algum erro, tente novamente!");
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
+		btnSalvar.setFont(new Font("Tahoma", Font.BOLD, 30));
+		btnSalvar.setBounds(1162, 11, 178, 54);
+		contentPane.add(btnSalvar);
 	}
 }
