@@ -1,4 +1,4 @@
-package view;
+package view2;
 import javax.swing.JPanel;
 
 public class PanelCadastroView_Usuario extends JPanel {

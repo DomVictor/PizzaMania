@@ -1,4 +1,4 @@
-package view;
+package view2;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -6,13 +6,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class Painel2 extends JPanel {
+public class Panel4 extends JPanel {
 
 	
-	public Painel2() {
+	public Panel4() {
 		setLayout(null);
 		
-
+		
 	}
-
 }

@@ -155,6 +155,7 @@ public class FormProduto extends JFrame {
 					produto.setId_cadastro(c);
 					produto.setPreco(Double.parseDouble(txtPreco.getText()));
 					u.UpdateProduto(produto);
+					dispose();
 				}
 				else
 				{
@@ -165,6 +166,7 @@ public class FormProduto extends JFrame {
 					produto.setId_cadastro(c);
 					produto.setPreco(Double.parseDouble(txtPreco.getText()));
 					u.SalvaProduto(produto);
+					dispose();
 				}
 				
 				

@@ -11,7 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import methods.ScreenSize;
+import view2.PainelPrincipal_Administrador;
+
 import java.awt.Panel;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JScrollPane;
 
 public class FormAdm extends JFrame {
 
@@ -22,6 +29,7 @@ public class FormAdm extends JFrame {
 	
 	
 	final static String PPA = "Painel Principal";
+	private JTable table;
 	
 	
 	
@@ -59,10 +67,30 @@ public class FormAdm extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
+		JButton btnPizzarias = new JButton("Pizzarias");
+		menuBar.add(btnPizzarias);
+		
+		JButton btnAvaliaes = new JButton("Avalia\u00E7\u00F5es");
+		menuBar.add(btnAvaliaes);
+		
 		contentPane.add(painelPrincipal_Administrador, PPA);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 110, 1320, 545);
+		painelPrincipal_Administrador.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		JLabel lblNewLabel = new JLabel("Pizzarias");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setBounds(10, 11, 186, 46);
+		painelPrincipal_Administrador.add(lblNewLabel);
+		
+		JButton btnNovoCadastro = new JButton("Novo Cadastro");
+		btnNovoCadastro.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		btnNovoCadastro.setBounds(1124, 53, 206, 46);
+		painelPrincipal_Administrador.add(btnNovoCadastro);
+		
 	}
-	
-	
-
 }

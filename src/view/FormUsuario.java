@@ -33,6 +33,14 @@ import methods.ScreenSize;
 import model.BdCadastro;
 import model.LoginDAO;
 import model.UsuarioDAO;
+import view2.Painel2;
+import view2.PainelPrincipal_Usuario;
+import view2.Panel4;
+import view2.Panel5;
+import view2.PanelCadastroEdit_Usuario;
+import view2.PanelCadastroView_Usuario;
+import view2.PanelProdutos;
+
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
