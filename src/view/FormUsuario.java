@@ -84,7 +84,7 @@ public class FormUsuario extends JFrame {
 	private JTextField txtNome;
 	private JTextArea txaSobre;
 	private JTable table;
-	private JTable table_1;
+	public JTable table_1;
 	public static String lblxNome;
 	private JTextField txtEstado;
 
@@ -180,16 +180,17 @@ public class FormUsuario extends JFrame {
 		contentPane.add(PainelPrincipal_Usuario, PPU);
 		
 		JLabel lblNomeA = new JLabel(cadastro.getNome() + " - Avalia\u00E7\u00F5es");
-		lblNomeA.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNomeA.setBounds(10, 11, 982, 31);
+		lblNomeA.setFont(new Font("Tahoma", Font.BOLD, 35));
+		lblNomeA.setBounds(10, 11, 982, 48);
 		PainelPrincipal_Usuario.add(lblNomeA);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 101, 810, 549);
+		scrollPane_1.setBounds(10, 166, 810, 507);
 		PainelPrincipal_Usuario.add(scrollPane_1);
 		
 		table = new JTable();
 		table.setModel(AtualizaTabelaAvaliacao());
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		scrollPane_1.setViewportView(table);
 		
 		
@@ -198,23 +199,23 @@ public class FormUsuario extends JFrame {
 		
 		
 		JLabel lblAvaliaoGeral = new JLabel("Avalia\u00E7\u00E3o Geral: " + cadastro.getNota());
-		lblAvaliaoGeral.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblAvaliaoGeral.setBounds(1097, 10, 257, 37);
+		lblAvaliaoGeral.setFont(new Font("Tahoma", Font.BOLD, 28));
+		lblAvaliaoGeral.setBounds(1030, 20, 300, 37);
 		PainelPrincipal_Usuario.add(lblAvaliaoGeral);
 		
 		JLabel lblNewLabel = new JLabel("Filtrar:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(10, 76, 70, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblNewLabel.setBounds(25, 121, 83, 34);
 		PainelPrincipal_Usuario.add(lblNewLabel);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mais recentes", "Mais altas", "Mais baixas"}));
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		comboBox.setBounds(57, 74, 111, 20);
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		comboBox.setBounds(102, 121, 155, 31);
 		PainelPrincipal_Usuario.add(comboBox);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(830, 101, 500, 549);
+		panel_1.setBounds(830, 163, 500, 510);
 		PainelPrincipal_Usuario.add(panel_1);
 		contentPane.add(panelProdutos, A);
 		
@@ -248,14 +249,16 @@ public class FormUsuario extends JFrame {
 				produtoa = new ArrayList<Produto>();
 				produtoa = ud.RetornaProdutos(produto.getId_produto(), 0);
 				produto = produtoa.get(0);
-				FormProduto1 pr = new FormProduto1(produto, 1, cadastro.getId());
+				FormProduto1 pr = new FormProduto1(produto, 1, cadastro.getId(), cadastro);
 				pr.setVisible(true);
 				pr.setExtendedState(MAXIMIZED_BOTH);
+				dispose();
+
 			}
 			// teste
 		});
 		button.setFont(new Font("Tahoma", Font.BOLD, 28));
-		button.setBounds(1125, 154, 178, 53);
+		button.setBounds(1125, 124, 178, 53);
 		panelProdutos.add(button);
 		
 		JButton button_1 = new JButton("Excluir");
@@ -268,20 +271,20 @@ public class FormUsuario extends JFrame {
 			}
 		});
 		button_1.setFont(new Font("Tahoma", Font.BOLD, 28));
-		button_1.setBounds(1125, 285, 178, 53);
+		button_1.setBounds(1125, 188, 178, 53);
 		panelProdutos.add(button_1);
 		
 		JButton btnNovoProduto = new JButton("Novo Produto");
 		btnNovoProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FormProduto1 ff = new FormProduto1(produto, 0, cadastro.getId());
+				FormProduto1 ff = new FormProduto1(produto, 0, cadastro.getId(), cadastro);
 				ff.setVisible(true);
 				ff.setExtendedState(MAXIMIZED_BOTH);
 				
 			}
 		});
 		btnNovoProduto.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnNovoProduto.setBounds(1125, 419, 178, 53);
+		btnNovoProduto.setBounds(1125, 528, 178, 53);
 		panelProdutos.add(btnNovoProduto);
 		
 		JLabel lblFiltrar = new JLabel("Filtrar:");
@@ -315,8 +318,19 @@ public class FormUsuario extends JFrame {
 		
 		JButton btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnNovaCategoria.setBounds(1125, 557, 178, 53);
+		btnNovaCategoria.setBounds(1125, 592, 178, 53);
 		panelProdutos.add(btnNovaCategoria);
+		
+		JButton btnExludos = new JButton("Exclu\u00EDdos");
+		btnExludos.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnExludos.setBounds(1125, 316, 178, 53);
+		panelProdutos.add(btnExludos);
+		
+		JButton btnRecuperar = new JButton("Recuperar");
+		btnRecuperar.setEnabled(false);
+		btnRecuperar.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnRecuperar.setBounds(1125, 252, 178, 53);
+		panelProdutos.add(btnRecuperar);
 		contentPane.add(painel2, MP);
 		contentPane.add(PanelCadastroView_Usuario, C);
 		contentPane.add(PanelCadastroEdit_Usuario, CE);
@@ -337,12 +351,12 @@ public class FormUsuario extends JFrame {
 		JLabel lblCnpj = new JLabel("Cnpj: " + cadastro.getCnpj());
 		
 		lblCnpj.setFont(new Font("SansSerif", Font.PLAIN, 25));
-		lblCnpj.setBounds(215, 103, 268, 37);
+		lblCnpj.setBounds(215, 103, 462, 37);
 		PanelCadastroView_Usuario.add(lblCnpj);
 		
 		JLabel lblEmail = new JLabel("E-mail: " + cadastro.getEmail());
 		lblEmail.setFont(new Font("SansSerif", Font.PLAIN, 25));
-		lblEmail.setBounds(770, 111, 268, 29);
+		lblEmail.setBounds(770, 111, 545, 29);
 		PanelCadastroView_Usuario.add(lblEmail);
 		
 		JPanel panel = new JPanel();
@@ -355,7 +369,7 @@ public class FormUsuario extends JFrame {
 		lblEndereco.setBounds(10, 207, 255, 51);
 		PanelCadastroView_Usuario.add(lblEndereco);
 		
-		JLabel lblRua = new JLabel("Rua: " + cadastro.getRua() + "N°: " + cadastro.getNumero() + " Bairro: " + cadastro.getBairro() + ".");
+		JLabel lblRua = new JLabel("Rua: " + cadastro.getRua() + "            N°: " + cadastro.getNumero() + "                  Bairro: " + cadastro.getBairro() + "");
 		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblRua.setBounds(10, 269, 1305, 29);
 		PanelCadastroView_Usuario.add(lblRua);
@@ -365,12 +379,12 @@ public class FormUsuario extends JFrame {
 		lblNumero.setBounds(1016, 357, 314, 29);
 		PanelCadastroView_Usuario.add(lblNumero);
 		
-		JLabel lblBairro = new JLabel("Complemento: " + cadastro.getCompl() + ". Referencia: " + cadastro.getRefe() + ".");
+		JLabel lblBairro = new JLabel("Complemento: " + cadastro.getCompl() + "                  Referencia: " + cadastro.getRefe() + "");
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblBairro.setBounds(10, 309, 1305, 37);
 		PanelCadastroView_Usuario.add(lblBairro);
 		
-		JLabel lblCidade = new JLabel("Cidade: " + cadastro.getCidade() + " Estado: " + cadastro.getEstado());
+		JLabel lblCidade = new JLabel("Cidade: " + cadastro.getCidade() + "                Estado: " + cadastro.getEstado());
 		lblCidade.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblCidade.setBounds(10, 357, 874, 29);
 		PanelCadastroView_Usuario.add(lblCidade);
@@ -382,7 +396,7 @@ public class FormUsuario extends JFrame {
 		
 		JLabel lblTelefone = new JLabel("Telefone: " + cadastro.getTelefone());
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblTelefone.setBounds(215, 159, 268, 37);
+		lblTelefone.setBounds(215, 159, 408, 37);
 		PanelCadastroView_Usuario.add(lblTelefone);
 		
 		JButton btnEditar = new JButton("Editar");
@@ -400,7 +414,7 @@ public class FormUsuario extends JFrame {
 		
 		JLabel label = new JLabel("Telefone 2: " + cadastro.getTelefone2());
 		label.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		label.setBounds(770, 159, 268, 37);
+		label.setBounds(770, 159, 545, 37);
 		PanelCadastroView_Usuario.add(label);
 		
 		JLabel label_1 = new JLabel(cadastro.getSobre());
@@ -409,7 +423,7 @@ public class FormUsuario extends JFrame {
 		label_1.setBounds(10, 475, 1140, 172);
 		PanelCadastroView_Usuario.add(label_1);
 		
-		JLabel lblNotaEstrelas = new JLabel("Nota: 0.0 estrelas");
+		JLabel lblNotaEstrelas = new JLabel("Nota: " + cadastro.getNota() + " estrelas");
 		lblNotaEstrelas.setFont(new Font("SansSerif", Font.PLAIN, 29));
 		lblNotaEstrelas.setBounds(1076, 19, 314, 41);
 		PanelCadastroView_Usuario.add(lblNotaEstrelas);

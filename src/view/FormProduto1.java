@@ -46,17 +46,19 @@ public class FormProduto1 extends JFrame {
 	private JTextField txtPreco;
 	private Produto produto = new Produto();
 	final static String C = "Meu Cadastro";
+	protected static final String A = null;
 	private JTextArea txtDescricao;
 	private JComboBox cbCategoria;
 
+	Cadastro cadastro;
 	
 	
 	@SuppressWarnings("unchecked")
-	public FormProduto1(Produto produto1, int i, int c) {
+	public FormProduto1(Produto produto1, int i, int c, Cadastro cadas) {
 		
 		produto = new Produto();
 		produto = produto1;
-		
+		cadastro = cadas;
 		
 		
 		setBounds(100, 100, ScreenSize.getScreenWidth(), ScreenSize.getScreenHeight()-30);

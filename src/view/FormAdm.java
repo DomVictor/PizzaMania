@@ -68,9 +68,11 @@ public class FormAdm extends JFrame {
 		setJMenuBar(menuBar);
 		
 		JButton btnPizzarias = new JButton("Pizzarias");
+		btnPizzarias.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		menuBar.add(btnPizzarias);
 		
 		JButton btnAvaliaes = new JButton("Avalia\u00E7\u00F5es");
+		btnAvaliaes.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		menuBar.add(btnAvaliaes);
 		
 		contentPane.add(painelPrincipal_Administrador, PPA);
@@ -80,16 +82,17 @@ public class FormAdm extends JFrame {
 		painelPrincipal_Administrador.add(scrollPane);
 		
 		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel = new JLabel("Pizzarias");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 35));
 		lblNewLabel.setBounds(10, 11, 186, 46);
 		painelPrincipal_Administrador.add(lblNewLabel);
 		
 		JButton btnNovoCadastro = new JButton("Novo Cadastro");
 		btnNovoCadastro.setFont(new Font("Tahoma", Font.PLAIN, 27));
-		btnNovoCadastro.setBounds(1124, 53, 206, 46);
+		btnNovoCadastro.setBounds(1124, 14, 206, 46);
 		painelPrincipal_Administrador.add(btnNovoCadastro);
 		
 	}
