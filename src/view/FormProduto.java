@@ -12,6 +12,7 @@ import control.Categoria;
 import control.Login;
 import control.Produto;
 import methods.ScreenSize;
+import model.ConnectionFactory;
 import model.UsuarioDAO;
 
 import javax.swing.JLabel;
@@ -25,6 +26,10 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 import javax.swing.ComboBoxModel;
@@ -88,16 +93,35 @@ public class FormProduto extends JFrame {
 		contentPane.add(lblCategoria);
 		
 		cbCategoria = new JComboBox();
-		Login lo = new Login();
-		UsuarioDAO d = new UsuarioDAO();
-		ArrayList<Categoria> catList = d.pegaCategoria(lo.getCadastro());
-		int count = catList.size();
-		int r = 0;
-		while(r < count)
-		{
-		cbCategoria.addItem(catList.get(r));
-		r ++;
-		}
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String lala;
+		ArrayList<Categoria> lista = new ArrayList<Categoria>();
+		
+		lala = "Select * from categoria where id_cadastro = " + c + " and ativo = 1 ";
+		
+			try {
+				stmt = conn.prepareStatement(lala);
+			
+			rs = stmt.executeQuery();
+			Categoria cat = new Categoria();
+			
+			while (rs.next()) {
+				String name = rs.getString("nome");
+				if (name.equals("")) {
+				cbCategoria.addItem("");
+				cbCategoria.setVisible(false);
+				} else {
+					cbCategoria.addItem(rs.getString("nome"));
+				cbCategoria.setVisible(true);
+				}
+			}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		cbCategoria.setSelectedIndex(0);
 		cbCategoria.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		cbCategoria.setBounds(176, 257, 270, 30);
 		contentPane.add(cbCategoria);

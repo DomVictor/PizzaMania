@@ -19,7 +19,7 @@ public class ConnectionFactory {
 	private static final String DB_PASSWORD = "193700";
 
 	
-	static Connection getConnection() {
+	public static Connection getConnection() {
 
 		Connection dbConnection = null;
 
