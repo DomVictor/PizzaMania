@@ -86,7 +86,7 @@ public class UsuarioDAO
 		+ " id_produto, id_cadastro, nome, descricao, id_categ, preco, ativo)"
 		+ " values("
 		+ "seq_produto.NEXTVAL, " + produto.getId_cadastro()
-		+ ", '" + produto.getNome() + "', '" + produto.getDescricao() + "', 1, " + produto.getPreco() + ", 1)";
+		+ ", '" + produto.getNome() + "', '" + produto.getDescricao() + "', " + produto.getId_categ() + ", " + produto.getPreco() + ", 1)";
 				System.out.println(lala);
 			stmt = conn.prepareStatement(lala);
 			stmt.execute();
@@ -191,6 +191,7 @@ public class UsuarioDAO
 		+ "nome = '" + produto.getNome() + "' "
 		+ ", descricao = '" + produto.getDescricao() 
 		+ "', preco = " + produto.getPreco() 
+		+ ", id_categ = " + produto.getId_categ()
 		+ " where id_produto = " + produto.getId_produto() + "";
 				
 			stmt = conn.prepareStatement(lala);

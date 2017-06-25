@@ -263,10 +263,11 @@ public class FormUsuario extends JFrame {
 				produtoa = new ArrayList<Produto>();
 				produtoa = ud.RetornaProdutos(produto.getId_produto(), 0);
 				produto = produtoa.get(0);
-				FormProduto pr = new FormProduto(produto, 1, cadastro.getId());
+				FormProduto1 pr = new FormProduto1(produto, 1, cadastro.getId());
 				pr.setVisible(true);
 				pr.setExtendedState(MAXIMIZED_BOTH);
 			}
+			// teste
 		});
 		button.setFont(new Font("Tahoma", Font.BOLD, 28));
 		button.setBounds(1125, 154, 178, 53);
@@ -288,7 +289,7 @@ public class FormUsuario extends JFrame {
 		JButton btnNovoProduto = new JButton("Novo Produto");
 		btnNovoProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FormProduto ff = new FormProduto(produto, 0, cadastro.getId());
+				FormProduto1 ff = new FormProduto1(produto, 0, cadastro.getId());
 				ff.setVisible(true);
 				ff.setExtendedState(MAXIMIZED_BOTH);
 				
@@ -402,17 +403,9 @@ public class FormUsuario extends JFrame {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtNome.setText(cadastro.getNome());
-				txtCnpj.setText(cadastro.getCnpj());
-				txtEmail.setText(cadastro.getEmail());
-				txtRua.setText(cadastro.getRua());
-				txtBairro.setText(cadastro.getBairro());
-				txtCidade.setText(cadastro.getCidade());
-				txtEstado.setText(cadastro.getEstado());
-				txtTelefone.setText(cadastro.getTelefone());
-				txtTelefone2.setText(cadastro.getTelefone2());
-				txtCep.setText(cadastro.getCep());
-				txaSobre.setText(cadastro.getSobre());
+				FormPizzaria1 fp = new FormPizzaria1(cadastro);
+				fp.setVisible(true);
+				fp.setExtendedState(MAXIMIZED_BOTH);
 				
 				selectedPanel(CE);
 				

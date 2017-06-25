@@ -41,6 +41,7 @@ public class LoginDAO
 					login.setSenha(rs.getString("SENHA"));
 					login.setNivel(Integer.valueOf(rs.getString("PRIVILEGIO")));
 					login.setCadastro(Integer.valueOf(rs.getString("ID_CADASTRO")));
+					cadastro.setNivel(Integer.parseInt(rs.getString("PRIVILEGIO")));
 					}
 				}
 			
@@ -83,6 +84,7 @@ public class LoginDAO
 						cadastro.setTelefone(rs.getString("TELEFONE"));
 						cadastro.setSobre(rs.getString("SOBRE"));
 						cadastro.setTelefone2(rs.getString("TELEFONE_2"));
+						
 					}
 					return cadastro;
 				}

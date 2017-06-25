@@ -85,10 +85,24 @@ public class FormLogin extends JFrame {
 					LoginDAO ld = new LoginDAO();
 					Cadastro cadastro = new Cadastro();
 					cadastro = ld.ListLogin(txtUsuario.getText(), txtSenha.getText());
-						if(cadastro != null){
+						if(cadastro != null)
+						{
+							if(cadastro.getNivel() == 2)
+							{
 							FormUsuario usu = new FormUsuario(cadastro);
 							usu.setVisible(true);
 							usu.setExtendedState(MAXIMIZED_BOTH);
+							}
+							else
+							{
+							FormAdm adm = new FormAdm();
+							adm.setVisible(true);
+							adm.setExtendedState(MAXIMIZED_BOTH);
+							}
+						}
+						else 
+						{
+							JOptionPane.showMessageDialog(null, "Verifique o usuário e a senha");
 						}
 					}
 				}
