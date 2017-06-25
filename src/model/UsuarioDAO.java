@@ -1,14 +1,18 @@
 package model;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 
 import control.Avaliacao;
+import control.Categoria;
 import control.Login;
 import control.Produto;
 
@@ -16,6 +20,7 @@ public class UsuarioDAO
 
 {
 	Produto produto = new Produto();
+
 
 	public static void FormLoad()
 	{	
@@ -228,5 +233,39 @@ public class UsuarioDAO
 				e.printStackTrace();
 			}
 		}
+	}
+	public ArrayList<Categoria> pegaCategoria(int cad) {
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String lala;
+		ArrayList<Categoria> lista = new ArrayList<Categoria>();
+		
+		lala = "Select * from categoria where id_cadastro = " + cad + " and ativo = 1 ";
+		try {
+			stmt = conn.prepareStatement(lala);
+			rs = stmt.executeQuery();
+			Categoria cat = new Categoria();
+			
+			while(rs.next()){
+				cat.setIdCategoria(Integer.parseInt(rs.getString("id_categ")));
+				cat.setNome(rs.getString("nome"));
+				lista.add(cat);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lista;
+		
 	}
 }

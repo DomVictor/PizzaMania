@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.Cadastro;
+import control.Categoria;
 import control.Login;
 import control.Produto;
 import methods.ScreenSize;
@@ -25,6 +26,8 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 
@@ -39,10 +42,11 @@ public class FormProduto extends JFrame {
 	private Produto produto = new Produto();
 	final static String C = "Meu Cadastro";
 	private JTextArea txtDescricao;
-
+	private JComboBox cbCategoria;
 
 	
 	
+	@SuppressWarnings("unchecked")
 	public FormProduto(Produto produto1, int i, int c) {
 		
 		produto = new Produto();
@@ -83,9 +87,17 @@ public class FormProduto extends JFrame {
 		lblCategoria.setBounds(24, 257, 151, 30);
 		contentPane.add(lblCategoria);
 		
-		JComboBox cbCategoria = new JComboBox();
-		cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"salgada", "doce", ""}));
-		cbCategoria.setSelectedIndex(0);
+		cbCategoria = new JComboBox();
+		Login lo = new Login();
+		UsuarioDAO d = new UsuarioDAO();
+		ArrayList<Categoria> catList = d.pegaCategoria(lo.getCadastro());
+		int count = catList.size();
+		int r = 0;
+		while(r < count)
+		{
+		cbCategoria.addItem(catList.get(r));
+		r ++;
+		}
 		cbCategoria.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		cbCategoria.setBounds(176, 257, 270, 30);
 		contentPane.add(cbCategoria);
@@ -121,15 +133,14 @@ public class FormProduto extends JFrame {
 		}
 		contentPane.add(txtDescricao);
 		
-		JLabel lblPreo = new JLabel("PRE\u00C7O:");
+		JLabel lblPreo = new JLabel("PRE\u00C7O:   R$");
 		lblPreo.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblPreo.setBounds(911, 257, 187, 30);
 		contentPane.add(lblPreo);
 		
 		txtPreco = new JTextField();
-		txtPreco.setText("R$");
 		txtPreco.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		txtPreco.setBounds(1017, 257, 284, 30);
+		txtPreco.setBounds(1058, 257, 243, 30);
 		if(i == 1)
 		{
 			txtPreco.setText(String.valueOf(produto.getPreco()));
@@ -168,10 +179,6 @@ public class FormProduto extends JFrame {
 					u.SalvaProduto(produto);
 					dispose();
 				}
-				
-				
-				
-				
 			}
 		});
 		btnSalvar.setFont(new Font("Tahoma", Font.BOLD, 27));

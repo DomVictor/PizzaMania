@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import model.UsuarioDAO;
-
+// teste
 public class Avaliacao 
 {	
 	private  int idAvaliacao;

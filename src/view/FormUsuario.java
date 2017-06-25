@@ -47,6 +47,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 
 public class FormUsuario extends JFrame {
@@ -139,11 +141,12 @@ public class FormUsuario extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setBounds(0, 0, ScreenSize.getScreenWidth(), ScreenSize.getScreenHeight());
-
+		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
 		JButton btnAvaliacoes = new JButton("Avaliações");
+		btnAvaliacoes.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnAvaliacoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedPanel(PPU);
@@ -152,6 +155,7 @@ public class FormUsuario extends JFrame {
 		menuBar.add(btnAvaliacoes);
 		
 		JButton btnProdutos = new JButton("Meus Produtos");
+		btnProdutos.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnProdutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedPanel(A);
@@ -160,6 +164,7 @@ public class FormUsuario extends JFrame {
 		menuBar.add(btnProdutos);
 		
 		JButton btnCadastro = new JButton("Meu Cadastro");
+		btnCadastro.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedPanel(C);
@@ -225,12 +230,12 @@ public class FormUsuario extends JFrame {
 		contentPane.add(panelProdutos, A);
 		
 		JLabel lblProdutos = new JLabel("Produtos");
-		lblProdutos.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblProdutos.setFont(new Font("Tahoma", Font.BOLD, 36));
 		lblProdutos.setBounds(10, 11, 178, 32);
 		panelProdutos.add(lblProdutos);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 118, 1066, 545);
+		scrollPane.setBounds(10, 124, 1066, 539);
 		panelProdutos.add(scrollPane);
 		
 		table_1 = new JTable();
@@ -259,8 +264,8 @@ public class FormUsuario extends JFrame {
 				pr.setExtendedState(MAXIMIZED_BOTH);
 			}
 		});
-		button.setFont(new Font("Tahoma", Font.BOLD, 25));
-		button.setBounds(1135, 127, 157, 53);
+		button.setFont(new Font("Tahoma", Font.BOLD, 28));
+		button.setBounds(1125, 154, 178, 53);
 		panelProdutos.add(button);
 		
 		JButton button_1 = new JButton("Excluir");
@@ -272,25 +277,26 @@ public class FormUsuario extends JFrame {
 				ud2.ExcluiProduto(produto);
 			}
 		});
-		button_1.setFont(new Font("Tahoma", Font.BOLD, 25));
-		button_1.setBounds(1135, 272, 157, 53);
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 28));
+		button_1.setBounds(1125, 285, 178, 53);
 		panelProdutos.add(button_1);
 		
-		JButton button_2 = new JButton("Novo");
-		button_2.addActionListener(new ActionListener() {
+		JButton btnNovoProduto = new JButton("Novo Produto");
+		btnNovoProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FormProduto fp = new FormProduto(produto, 0, cadastro.getId());
-				fp.setVisible(true);
-				fp.setExtendedState(MAXIMIZED_BOTH);
+				FormProduto ff = new FormProduto(produto, 0, cadastro.getId());
+				ff.setVisible(true);
+				ff.setExtendedState(MAXIMIZED_BOTH);
+				
 			}
 		});
-		button_2.setFont(new Font("Tahoma", Font.BOLD, 25));
-		button_2.setBounds(1135, 422, 157, 53);
-		panelProdutos.add(button_2);
+		btnNovoProduto.setFont(new Font("Tahoma", Font.BOLD, 21));
+		btnNovoProduto.setBounds(1125, 419, 178, 53);
+		panelProdutos.add(btnNovoProduto);
 		
 		JLabel lblFiltrar = new JLabel("Filtrar:");
-		lblFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblFiltrar.setBounds(16, 85, 81, 22);
+		lblFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblFiltrar.setBounds(10, 91, 81, 22);
 		panelProdutos.add(lblFiltrar);
 		
 		JLabel lblId = new JLabel("");
@@ -313,8 +319,14 @@ public class FormUsuario extends JFrame {
 		panelProdutos.add(lblPreco);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(72, 85, 112, 24);
+		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		comboBox_1.setBounds(88, 92, 112, 24);
 		panelProdutos.add(comboBox_1);
+		
+		JButton btnNovaCategoria = new JButton("Nova Categoria");
+		btnNovaCategoria.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnNovaCategoria.setBounds(1125, 557, 178, 53);
+		panelProdutos.add(btnNovaCategoria);
 		contentPane.add(painel2, MP);
 		contentPane.add(PanelCadastroView_Usuario, C);
 		contentPane.add(PanelCadastroEdit_Usuario, CE);
