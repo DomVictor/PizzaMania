@@ -42,6 +42,7 @@ public class FormAdm extends JFrame {
 				try {
 					FormAdm frame = new FormAdm();
 					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -271,9 +271,13 @@ public class FormUsuario extends JFrame {
 				FormProduto1 pr = new FormProduto1(produto, 1, cadastro.getId(), cadastro);
 				pr.setVisible(true);
 				pr.setExtendedState(MAXIMIZED_BOTH);
+<<<<<<< HEAD
+				dispose();
+=======
 				
 				table_1.setModel(AtualizaTabelaProdutos());
 
+>>>>>>> b3f08ca8adea0e9ad5bf50a147678fa578661c0f
 			}
 			// teste
 		});
@@ -300,7 +304,7 @@ public class FormUsuario extends JFrame {
 				FormProduto1 ff = new FormProduto1(produto, 0, cadastro.getId(), cadastro);
 				ff.setVisible(true);
 				ff.setExtendedState(MAXIMIZED_BOTH);
-				
+				ff.dispose();
 			}
 		});
 		btnNovoProduto.setFont(new Font("Tahoma", Font.BOLD, 21));
