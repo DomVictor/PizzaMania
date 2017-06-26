@@ -36,9 +36,13 @@ public class UsuarioDAO
 		{
 			lala = "select * from produto where id_cadastro = " + id + " and ativo = '1'";
 		}
-		else
+		else if (func == 2)
 		{
 			lala = "select * from produto where id_produto = " + id + " and ativo = '1'";
+		}
+		else
+		{
+			lala = "select * from produto where id_cadastro = " + id + " and ativo = '0'";
 		}
 		try {
 			stmt = conn.prepareStatement(lala);

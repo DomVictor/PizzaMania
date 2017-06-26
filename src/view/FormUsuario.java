@@ -96,7 +96,7 @@ public class FormUsuario extends JFrame {
 		listap = new ArrayList<Produto>();
 		listap = usuario.RetornaProdutos(cadastro.getId(), 1);
 		List<String[]> lista = new ArrayList<>();
-		String[] colunas = {"ID", "NOME", "CATEGORIA", "PRECO"};
+		String[] colunas = {"ID", "NOME", "CATEGORIA", "PREÇO"};
 		Produto produto = new Produto();
 		for(int i = 0; i < listap.size(); i++){
 			produto = listap.get(i);
@@ -105,11 +105,27 @@ public class FormUsuario extends JFrame {
 		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
 		return model;		
 	}
+	
+	public TableModel AtualizaTabelaProdutosExcluidos(){
+		UsuarioDAO usuario = new UsuarioDAO();
+		listap = new ArrayList<Produto>();
+		listap = usuario.RetornaProdutos(cadastro.getId(), 3);
+		List<String[]> lista = new ArrayList<>();
+		String[] colunas = {"ID", "NOME", "CATEGORIA", "PREÇO"};
+		Produto produto = new Produto();
+		for(int i = 0; i < listap.size(); i++){
+			produto = listap.get(i);
+			lista.add(new String[]{String.valueOf(produto.getId_produto()), String.valueOf(produto.getNome()), String.valueOf(produto.getId_categ()), "R$ " + String.valueOf(produto.getPreco())});
+		}
+		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
+		return model;		
+	}
+	
 	public  TableModel AtualizaTabelaAvaliacao(){
 		UsuarioDAO usuario = new UsuarioDAO();
 		ArrayList<Avaliacao> listap = usuario.RetornaAvaliacao(cadastro.getId());
 		List<String[]> lista = new ArrayList<>();
-		String[] colunas = {"ID", "NOTA", "EMAIL", "AVALIACAO"};
+		String[] colunas = {"ID", "NOTA", "EMAIL", "AVALIAÇÃO"};
 		Avaliacao avaliacao = new Avaliacao();
 		for(int i = 0; i < listap.size(); i++){
 			avaliacao = listap.get(i);
@@ -247,12 +263,13 @@ public class FormUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDAO ud = new UsuarioDAO();
 				produtoa = new ArrayList<Produto>();
-				produtoa = ud.RetornaProdutos(produto.getId_produto(), 0);
+				produtoa = ud.RetornaProdutos(produto.getId_produto(), 2);
 				produto = produtoa.get(0);
 				FormProduto1 pr = new FormProduto1(produto, 1, cadastro.getId(), cadastro);
 				pr.setVisible(true);
 				pr.setExtendedState(MAXIMIZED_BOTH);
-				dispose();
+				
+				table_1.setModel(AtualizaTabelaProdutos());
 
 			}
 			// teste
@@ -322,13 +339,18 @@ public class FormUsuario extends JFrame {
 		panelProdutos.add(btnNovaCategoria);
 		
 		JButton btnExludos = new JButton("Exclu\u00EDdos");
+		btnExludos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				table_1.setModel(AtualizaTabelaProdutosExcluidos());
+			}
+		});
 		btnExludos.setFont(new Font("Tahoma", Font.BOLD, 28));
 		btnExludos.setBounds(1125, 316, 178, 53);
 		panelProdutos.add(btnExludos);
 		
 		JButton btnRecuperar = new JButton("Recuperar");
 		btnRecuperar.setEnabled(false);
-		btnRecuperar.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnRecuperar.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnRecuperar.setBounds(1125, 252, 178, 53);
 		panelProdutos.add(btnRecuperar);
 		contentPane.add(painel2, MP);
