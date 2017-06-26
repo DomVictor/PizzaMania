@@ -287,7 +287,7 @@ public class FormUsuario extends JFrame {
 				UsuarioDAO ud2 = new UsuarioDAO();
 				produtoa = ud2.RetornaProdutos(produto.getId_produto(), 0);
 				produto = produtoa.get(0);
-				ud2.ExcluiProduto(produto);
+				ud2.AtivoInativoProduto(produto, 0);
 			}
 		});
 		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 28));
@@ -343,6 +343,14 @@ public class FormUsuario extends JFrame {
 		
 
 		btnRecuperar = new JButton("Recuperar");
+		btnRecuperar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsuarioDAO ud2 = new UsuarioDAO();
+				produtoa = ud2.RetornaProdutos(produto.getId_produto(), 0);
+				produto = produtoa.get(0);
+				ud2.AtivoInativoProduto(produto, 1);
+			}
+		});
 		btnRecuperar.setEnabled(false);
 		btnRecuperar.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnRecuperar.setBounds(1125, 252, 178, 53);
