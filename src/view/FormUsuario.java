@@ -271,13 +271,13 @@ public class FormUsuario extends JFrame {
 				FormProduto1 pr = new FormProduto1(produto, 1, cadastro.getId(), cadastro);
 				pr.setVisible(true);
 				pr.setExtendedState(MAXIMIZED_BOTH);
-<<<<<<< HEAD
+
 				dispose();
-=======
+
 				
 				table_1.setModel(AtualizaTabelaProdutos());
 
->>>>>>> b3f08ca8adea0e9ad5bf50a147678fa578661c0f
+
 			}
 			// teste
 		});

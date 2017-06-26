@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import control.Cadastro;
 import methods.ScreenSize;
+import methods.ValidaCNPJ;
 import model.BdCadastro;
 
 import javax.swing.JLabel;
@@ -79,6 +80,8 @@ public class FormPizzaria1 extends JFrame {
 		txtCnpj.setBounds(962, 119, 305, 30);
 		contentPane.add(txtCnpj);
 		txtCnpj.setColumns(10);
+		
+		
 		
 		JLabel lblEmail = new JLabel("E-mail:");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -208,6 +211,13 @@ public class FormPizzaria1 extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				
+				boolean t = ValidaCNPJ.isCNPJ(txtCnpj.getText());
+				
+				if(t == false)
+				{
+					JOptionPane.showMessageDialog(null, "Verifique os valores inseridos");
+				}
 				
 				Cadastro novoCad = new Cadastro();
 				novoCad.setId(cadastro.getId());
