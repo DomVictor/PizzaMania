@@ -87,7 +87,10 @@ public class FormUsuario extends JFrame {
 	public JTable table_1;
 	public static String lblxNome;
 	private JTextField txtEstado;
-
+	private JButton btnExluidos;
+	private JButton btnRecuperar;
+	private JButton btnExcluir;
+	
 	ArrayList<Produto> listap;
 	ArrayList<Produto> produtoa = new ArrayList<Produto>();
 	
@@ -96,7 +99,7 @@ public class FormUsuario extends JFrame {
 		listap = new ArrayList<Produto>();
 		listap = usuario.RetornaProdutos(cadastro.getId(), 1);
 		List<String[]> lista = new ArrayList<>();
-		String[] colunas = {"ID", "NOME", "CATEGORIA", "PRECO"};
+		String[] colunas = {"ID", "NOME", "CATEGORIA", "PREÇO"};
 		Produto produto = new Produto();
 		for(int i = 0; i < listap.size(); i++){
 			produto = listap.get(i);
@@ -105,11 +108,27 @@ public class FormUsuario extends JFrame {
 		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
 		return model;		
 	}
+	
+	public TableModel AtualizaTabelaProdutosExcluidos(){
+		UsuarioDAO usuario = new UsuarioDAO();
+		listap = new ArrayList<Produto>();
+		listap = usuario.RetornaProdutos(cadastro.getId(), 3);
+		List<String[]> lista = new ArrayList<>();
+		String[] colunas = {"ID", "NOME", "CATEGORIA", "PREÇO"};
+		Produto produto = new Produto();
+		for(int i = 0; i < listap.size(); i++){
+			produto = listap.get(i);
+			lista.add(new String[]{String.valueOf(produto.getId_produto()), String.valueOf(produto.getNome()), String.valueOf(produto.getId_categ()), "R$ " + String.valueOf(produto.getPreco())});
+		}
+		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]), colunas);
+		return model;		
+	}
+	
 	public  TableModel AtualizaTabelaAvaliacao(){
 		UsuarioDAO usuario = new UsuarioDAO();
 		ArrayList<Avaliacao> listap = usuario.RetornaAvaliacao(cadastro.getId());
 		List<String[]> lista = new ArrayList<>();
-		String[] colunas = {"ID", "NOTA", "EMAIL", "AVALIACAO"};
+		String[] colunas = {"ID", "NOTA", "EMAIL", "AVALIAÇÃO"};
 		Avaliacao avaliacao = new Avaliacao();
 		for(int i = 0; i < listap.size(); i++){
 			avaliacao = listap.get(i);
@@ -242,36 +261,42 @@ public class FormUsuario extends JFrame {
 		
 		
 		
-		JButton button = new JButton("Alterar");
-		button.addActionListener(new ActionListener() {
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDAO ud = new UsuarioDAO();
 				produtoa = new ArrayList<Produto>();
-				produtoa = ud.RetornaProdutos(produto.getId_produto(), 0);
+				produtoa = ud.RetornaProdutos(produto.getId_produto(), 2);
 				produto = produtoa.get(0);
 				FormProduto1 pr = new FormProduto1(produto, 1, cadastro.getId(), cadastro);
 				pr.setVisible(true);
 				pr.setExtendedState(MAXIMIZED_BOTH);
+<<<<<<< HEAD
 				dispose();
+=======
+				
+				table_1.setModel(AtualizaTabelaProdutos());
+
+>>>>>>> b3f08ca8adea0e9ad5bf50a147678fa578661c0f
 			}
 			// teste
 		});
-		button.setFont(new Font("Tahoma", Font.BOLD, 28));
-		button.setBounds(1125, 124, 178, 53);
-		panelProdutos.add(button);
+		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnAlterar.setBounds(1125, 124, 178, 53);
+		panelProdutos.add(btnAlterar);
 		
-		JButton button_1 = new JButton("Excluir");
-		button_1.addActionListener(new ActionListener() {
+		 btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDAO ud2 = new UsuarioDAO();
 				produtoa = ud2.RetornaProdutos(produto.getId_produto(), 0);
 				produto = produtoa.get(0);
-				ud2.ExcluiProduto(produto);
+				ud2.AtivoInativoProduto(produto, 0);
 			}
 		});
-		button_1.setFont(new Font("Tahoma", Font.BOLD, 28));
-		button_1.setBounds(1125, 188, 178, 53);
-		panelProdutos.add(button_1);
+		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnExcluir.setBounds(1125, 188, 178, 53);
+		panelProdutos.add(btnExcluir);
 		
 		JButton btnNovoProduto = new JButton("Novo Produto");
 		btnNovoProduto.addActionListener(new ActionListener() {
@@ -320,16 +345,46 @@ public class FormUsuario extends JFrame {
 		btnNovaCategoria.setBounds(1125, 592, 178, 53);
 		panelProdutos.add(btnNovaCategoria);
 		
-		JButton btnExludos = new JButton("Exclu\u00EDdos");
-		btnExludos.setFont(new Font("Tahoma", Font.BOLD, 28));
-		btnExludos.setBounds(1125, 316, 178, 53);
-		panelProdutos.add(btnExludos);
-		
-		JButton btnRecuperar = new JButton("Recuperar");
+
+		btnRecuperar = new JButton("Recuperar");
+		btnRecuperar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsuarioDAO ud2 = new UsuarioDAO();
+				produtoa = ud2.RetornaProdutos(produto.getId_produto(), 0);
+				produto = produtoa.get(0);
+				ud2.AtivoInativoProduto(produto, 1);
+			}
+		});
 		btnRecuperar.setEnabled(false);
-		btnRecuperar.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnRecuperar.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnRecuperar.setBounds(1125, 252, 178, 53);
 		panelProdutos.add(btnRecuperar);
+		
+		btnExluidos = new JButton("Exclu\u00EDdos");
+		btnExluidos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(btnExluidos.getText().equals("Excluídos"))
+				{
+					table_1.setModel(AtualizaTabelaProdutosExcluidos());
+					btnExluidos.setText("Ativos");
+					btnRecuperar.setEnabled(true);
+					btnExcluir.setEnabled(false);
+				}
+				else
+				{
+					table_1.setModel(AtualizaTabelaProdutos());
+					btnExluidos.setText("Excluídos");
+					btnRecuperar.setEnabled(false);
+					btnExcluir.setEnabled(true);
+				}
+				
+				
+			}
+		});
+		btnExluidos.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnExluidos.setBounds(1125, 316, 178, 53);
+		panelProdutos.add(btnExluidos);
+		
 		contentPane.add(painel2, MP);
 		contentPane.add(PanelCadastroView_Usuario, C);
 		contentPane.add(PanelCadastroEdit_Usuario, CE);

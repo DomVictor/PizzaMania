@@ -36,9 +36,13 @@ public class UsuarioDAO
 		{
 			lala = "select * from produto where id_cadastro = " + id + " and ativo = '1'";
 		}
-		else
+		else if (func == 2)
 		{
 			lala = "select * from produto where id_produto = " + id + " and ativo = '1'";
+		}
+		else
+		{
+			lala = "select * from produto where id_cadastro = " + id + " and ativo = '0'";
 		}
 		try {
 			stmt = conn.prepareStatement(lala);
@@ -209,12 +213,14 @@ public class UsuarioDAO
 		}
 		
 	}
-	public void ExcluiProduto(Produto produto1) {
+	public void AtivoInativoProduto(Produto produto1, int i) {
 		produto = produto1;
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = null;
 		String lala;
 		
+		if(i == 0)
+		{
 		try
 		{
 		lala = "Update produto set "
@@ -232,6 +238,29 @@ public class UsuarioDAO
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}
+		}
+		}
+		else
+		{
+			try
+			{
+			lala = "Update produto set "
+			+ "ativo = 1"
+			+ " where id_produto = " + produto.getId_produto() + "";
+					
+				stmt = conn.prepareStatement(lala);
+				stmt.execute();
+				JOptionPane.showMessageDialog(null, "Registro Recuperado");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally{
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
