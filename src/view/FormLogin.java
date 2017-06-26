@@ -29,6 +29,7 @@ public class FormLogin extends JFrame {
 			public void run() {
 				try {
 					FormLogin frame = new FormLogin();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

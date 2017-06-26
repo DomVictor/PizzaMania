@@ -15,8 +15,8 @@ public class ConnectionFactory {
 
 	private static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String DB_CONNECTION = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String DB_USER = "VICTOR";
-	private static final String DB_PASSWORD = "193700";
+	private static final String DB_USER = "TCC_PIZZAMANIA";
+	private static final String DB_PASSWORD = "123456";
 
 	
 	public static Connection getConnection() {
