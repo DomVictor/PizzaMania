@@ -5,14 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
 
 import control.Cadastro;
+import control.Cep;
 import control.Login;
-import view.FormLogin;
 
 public class BdCadastro {
 	
@@ -158,6 +154,25 @@ public class BdCadastro {
 				statement2.close();
 		}
 		return false;
+	}
+	public Cep retornaCEP(String cep)
+	{
+		Connection dbConnection = null;
+		Statement statement = null;
+		ResultSet rs;
+		Cep cepp = new Cep();
+		
+		String str = "SELECT * FROM TABELACEP WHERE CEP ='" + cep;
+		try{
+			dbConnection = ConnectionFactory.getConnection();
+			statement = dbConnection.createStatement();
+			rs= statement.executeQuery(str);
+			while(rs.next()){
+				cepp.setCep(rs.se);
+			}
+		}
+		return cepp;
+	}
 	}
 
 
