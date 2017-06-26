@@ -239,7 +239,7 @@ public class FormPizzaria1 extends JFrame {
 					BdCadastro ca = new BdCadastro();
 					if(ca.novoCadastro(novoCad) != false)
 					{
-						JOptionPane.showMessageDialog(null, "Cadastro atualizado com sucesso");
+						JOptionPane.showMessageDialog(null, "Cadastro feito com sucesso");
 						cadastro = new Cadastro();
 						cadastro = novoCad;
 					}

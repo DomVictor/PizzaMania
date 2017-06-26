@@ -87,7 +87,10 @@ public class FormUsuario extends JFrame {
 	public JTable table_1;
 	public static String lblxNome;
 	private JTextField txtEstado;
-
+	private JButton btnExluidos;
+	private JButton btnRecuperar;
+	private JButton btnExcluir;
+	
 	ArrayList<Produto> listap;
 	ArrayList<Produto> produtoa = new ArrayList<Produto>();
 	
@@ -258,8 +261,8 @@ public class FormUsuario extends JFrame {
 		
 		
 		
-		JButton button = new JButton("Alterar");
-		button.addActionListener(new ActionListener() {
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDAO ud = new UsuarioDAO();
 				produtoa = new ArrayList<Produto>();
@@ -274,12 +277,12 @@ public class FormUsuario extends JFrame {
 			}
 			// teste
 		});
-		button.setFont(new Font("Tahoma", Font.BOLD, 28));
-		button.setBounds(1125, 124, 178, 53);
-		panelProdutos.add(button);
+		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnAlterar.setBounds(1125, 124, 178, 53);
+		panelProdutos.add(btnAlterar);
 		
-		JButton button_1 = new JButton("Excluir");
-		button_1.addActionListener(new ActionListener() {
+		 btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDAO ud2 = new UsuarioDAO();
 				produtoa = ud2.RetornaProdutos(produto.getId_produto(), 0);
@@ -287,9 +290,9 @@ public class FormUsuario extends JFrame {
 				ud2.ExcluiProduto(produto);
 			}
 		});
-		button_1.setFont(new Font("Tahoma", Font.BOLD, 28));
-		button_1.setBounds(1125, 188, 178, 53);
-		panelProdutos.add(button_1);
+		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnExcluir.setBounds(1125, 188, 178, 53);
+		panelProdutos.add(btnExcluir);
 		
 		JButton btnNovoProduto = new JButton("Novo Produto");
 		btnNovoProduto.addActionListener(new ActionListener() {
@@ -338,21 +341,38 @@ public class FormUsuario extends JFrame {
 		btnNovaCategoria.setBounds(1125, 592, 178, 53);
 		panelProdutos.add(btnNovaCategoria);
 		
-		JButton btnExludos = new JButton("Exclu\u00EDdos");
-		btnExludos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				table_1.setModel(AtualizaTabelaProdutosExcluidos());
-			}
-		});
-		btnExludos.setFont(new Font("Tahoma", Font.BOLD, 28));
-		btnExludos.setBounds(1125, 316, 178, 53);
-		panelProdutos.add(btnExludos);
-		
-		JButton btnRecuperar = new JButton("Recuperar");
+
+		btnRecuperar = new JButton("Recuperar");
 		btnRecuperar.setEnabled(false);
 		btnRecuperar.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnRecuperar.setBounds(1125, 252, 178, 53);
 		panelProdutos.add(btnRecuperar);
+		
+		btnExluidos = new JButton("Exclu\u00EDdos");
+		btnExluidos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(btnExluidos.getText().equals("Excluídos"))
+				{
+					table_1.setModel(AtualizaTabelaProdutosExcluidos());
+					btnExluidos.setText("Ativos");
+					btnRecuperar.setEnabled(true);
+					btnExcluir.setEnabled(false);
+				}
+				else
+				{
+					table_1.setModel(AtualizaTabelaProdutos());
+					btnExluidos.setText("Excluídos");
+					btnRecuperar.setEnabled(false);
+					btnExcluir.setEnabled(true);
+				}
+				
+				
+			}
+		});
+		btnExluidos.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnExluidos.setBounds(1125, 316, 178, 53);
+		panelProdutos.add(btnExluidos);
+		
 		contentPane.add(painel2, MP);
 		contentPane.add(PanelCadastroView_Usuario, C);
 		contentPane.add(PanelCadastroEdit_Usuario, CE);
