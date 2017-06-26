@@ -345,6 +345,7 @@ public class FormUsuario extends JFrame {
 		btnRecuperar = new JButton("Recuperar");
 		btnRecuperar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				UsuarioDAO ud2 = new UsuarioDAO();
 				produtoa = ud2.RetornaProdutos(produto.getId_produto(), 0);
 				produto = produtoa.get(0);
@@ -362,6 +363,7 @@ public class FormUsuario extends JFrame {
 				if(btnExluidos.getText().equals("Excluídos"))
 				{
 					table_1.setModel(AtualizaTabelaProdutosExcluidos());
+					
 					btnExluidos.setText("Ativos");
 					btnRecuperar.setEnabled(true);
 					btnExcluir.setEnabled(false);
