@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import control.Cadastro;
@@ -28,7 +30,9 @@ public class FormLogin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
 					FormLogin frame = new FormLogin();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,16 +51,6 @@ public class FormLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Usu\u00E1rio:");
-		lblNewLabel.setBounds(10, 78, 115, 20);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Senha:");
-		lblNewLabel_1.setBounds(22, 123, 67, 14);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		contentPane.add(lblNewLabel_1);
 		
 		txtUsuario = new JTextField();
 		txtUsuario.setBounds(99, 75, 238, 20);
@@ -116,5 +110,10 @@ public class FormLogin extends JFrame {
 		btnEntrar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnEntrar.setBounds(245, 162, 96, 32);
 		contentPane.add(btnEntrar);
+		
+		JLabel lblNewLabel = new JLabel(new ImageIcon("src/draw/icons8-Password 1-100.png"));
+		lblNewLabel.setSize(40, 40);
+		lblNewLabel.setBounds(10, 24, 79, 71);
+		contentPane.add(lblNewLabel);
 	}
 }

@@ -39,6 +39,7 @@ public class FormPizzaria extends JFrame {
 			public void run() {
 				try {
 					FormPizzaria frame = new FormPizzaria();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 					frame.setExtendedState(MAXIMIZED_BOTH);
 				} catch (Exception e) {

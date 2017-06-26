@@ -253,7 +253,6 @@ public class FormUsuario extends JFrame {
 				pr.setVisible(true);
 				pr.setExtendedState(MAXIMIZED_BOTH);
 				dispose();
-
 			}
 			// teste
 		});

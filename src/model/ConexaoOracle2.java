@@ -16,8 +16,8 @@ public class ConexaoOracle2 {
         String database = "xe";
 
         // Configuração dos parâmetros de autenticação
-        String user = "victor";
-        String passwd = "193700";
+        String user = "tcc_pizzamania";
+        String passwd = "123456";
 
         try {
             String url = "jdbc:oracle:thin:@" + server + ":" + port + ":" + database;
